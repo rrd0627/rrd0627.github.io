@@ -1,10 +1,10 @@
 ---
 layout: post
-title: firstPost
-date: 2021-08-30 23:42:28 +0900
-category: Git
+title: Graphics
+date: 2021-08-31 00:21:43 +0900
+category: Graphics
 ---
-# first test
+# test
 > Hello!
 
 코드는 다음과 같이 사용
