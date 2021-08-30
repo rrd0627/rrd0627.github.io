@@ -2,7 +2,7 @@
 layout: post
 title: firstPost
 date: 2021-08-30 23:42:28 +0900
-category: git
+category: 깃허브
 ---
 # first test
 > Hello!
