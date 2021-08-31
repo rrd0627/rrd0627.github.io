@@ -20,6 +20,4 @@ print(hello world);
 
 :::image type="icon" source="/assets/img/logo.png" border="false":::
 
-![](/assets/img/logo.png)
-
-
+![](/assets/img/logo.png)]

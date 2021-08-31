@@ -1,0 +1,113 @@
+---
+layout: post
+title: LeetCode2. Add Two Numbers
+date: 2021-09-01 03:44:28 +0900
+category: Algorithm
+---
+### LeetCode 2. Add Two Numbers
+
+![](/assets/img/leetcode/2.png)
+
+
+- 두개의 리스트 각 인덱스 더하기
+- 10을 넘으면 다음 인덱스 더하는것에 1 더해주기
+- 리스트의 끝까지 
+
+
+
+
+>첫번째 코드
+```c#
+public class Solution
+{
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+    {
+        ListNode answer = new ListNode();
+        ListNode node = answer;
+        int val = 0;
+        int carry = 0;
+        while (l1 != null || l2 != null)
+        {
+            val = carry;
+            if (l1 != null)
+            {
+                val += l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null)
+            {
+                val += l2.val;
+                l2 = l2.next;
+            }
+            if (val >= 10)
+            {
+                val -= 10;
+                carry = 1;
+            }
+            else
+            {
+                carry = 0;
+            }
+
+            ListNode temp = new ListNode(val);
+            node.next = temp;
+            node = node.next;
+        }
+        if (carry > 0)
+        {
+            ListNode temp = new ListNode(carry);
+            node.next = temp;
+        }
+        return answer.next;
+    }
+}
+```
+
+
+>두번째 약간의 개선 코드
+>
+```c#
+public class Solution
+{
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+    {
+        ListNode answer = new ListNode();
+        ListNode node = answer;
+        int val = 0, carry = 0;
+        while (l1 != null || l2 != null)
+        {
+            val = carry;
+            if (l1 != null)
+            {
+                val += l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null)
+            {
+                val += l2.val;
+                l2 = l2.next;
+            }
+            node.val = val % 10;
+            if (l1 != null || l2 != null)
+            {
+                ListNode temp = new ListNode();
+                node.next = temp;
+                node = temp;
+            }
+            carry = 0;
+            if (val >= 10)
+            {
+                carry = 1;
+            }
+        }
+        if (carry > 0)
+        {
+            ListNode temp = new ListNode(carry);
+            node.next = temp;
+        }
+        return answer;
+    }
+}
+```
+
+![](/assets/img/leetcode/2_1.png)
