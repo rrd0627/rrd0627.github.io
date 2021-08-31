@@ -9,6 +9,9 @@ category: Algorithm
 ![](/assets/img/leetcode/2.png)
 
 
+
+
+
 - 두개의 리스트 각 인덱스 더하기
 - 10을 넘으면 다음 인덱스 더하는것에 1 더해주기
 - 리스트의 끝까지 
@@ -16,7 +19,11 @@ category: Algorithm
 
 
 
+
+
 >첫번째 코드
+
+
 ```c#
 public class Solution
 {
@@ -65,7 +72,7 @@ public class Solution
 
 
 >두번째 약간의 개선 코드
->
+
 ```c#
 public class Solution
 {
