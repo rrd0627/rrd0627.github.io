@@ -38,8 +38,7 @@ public class ComplexMove : MonoBehaviour
 ```
 <br/>
 <br/>
-<img src="/assets/img/designpattern/2021-09-02-23-35-26.png" width="300" height="500">
-
+![](/assets/img/designpattern/2021-09-02-23-35-26.png)
 <br/>
 <br/>
 이때, 어느 한가지만 다른 주기로 움직이고 싶다거나 움직임의 정도를 바꾸고 싶을때 복잡해진다.
@@ -111,7 +110,7 @@ public class ScaleMove : MonoBehaviour
 
 <br/>
 <br/>
-<img src="/assets/img/designpattern/2021-09-02-23-38-36.png" width="300" height="400">
+![](/assets/img/designpattern/2021-09-02-23-38-36.png)
 <br/>
 <br/>
 기능별로 컴포넌트로 나누어 쉽게 이해할 수 있고 쉽게 수정할 수 있다.
