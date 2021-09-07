@@ -46,6 +46,55 @@ public class Solution
     }
 }
 ```
+
 > 양쪽 인덱스를 구별하여 
 해시에 겹치지 않으면 오른쪽 인덱스를 늘리고 
 겹치는경우에 왼쪽 인덱스를 늘려 가장 긴 길이의 문자열을 찾음
+
+<br><br>
+
+
+>개선 코드
+
+<br>
+
+```c#
+public class Solution
+{
+    public int LengthOfLongestSubstring(string s)
+    {
+        Dictionary<char, int> dic = new Dictionary<char, int>();
+        int startIndex = 0;
+        int lastIndex = 0;
+        int ret = 0;
+        int strLength = s.Length;
+        int sameIndex;
+        while (lastIndex < s.Length)
+        {
+            if (!dic.ContainsKey(s[lastIndex]))
+            {//안겹치면
+                dic.Add(s[lastIndex], lastIndex);
+                lastIndex++;
+                ret = Math.Max(ret, lastIndex - startIndex);
+                continue;
+            }
+            //겹치면
+
+            //겹치는 위치
+            sameIndex = dic[s[lastIndex]];
+            for (int i = startIndex; i <= sameIndex; i++)
+            {
+                dic.Remove(s[i]);
+            }
+            startIndex = sameIndex + 1;
+        }
+        return ret;
+    }
+}
+```
+
+>겹치게 되면 겹쳐지는곳까지 쓸모가 없기 때문에 왼쪽 인덱스를 좀더 땡기는 방식!
+겹치는 위치를 Dictionary를 활용하여 구하고 바로 옮겨옴
+
+
+![](/assets/img/leetcode/3_1.png)
