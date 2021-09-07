@@ -1,7 +1,7 @@
 ---
 layout: post
 title: LeetCode4. Median of Two Sorted Arrays
-date:  +0900
+date: 2021-09-08 00:20:53 +0900
 category: Algorithm
 ---
 ### LeetCode 4. Median of Two Sorted Arrays
