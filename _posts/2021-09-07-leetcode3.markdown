@@ -1,0 +1,51 @@
+---
+layout: post
+title: LeetCode3. Longest Substring Without Repeating Characters
+date: 2021-09-07 23:16:59 +0900
+category: Algorithm
+---
+### LeetCode 3. Longest Substring Without Repeating Characters
+
+![](/assets/img/leetcode/3.png)
+
+- 같은 문자가 들어가지 않는 최대 길이의 문자열 구하기!
+<br><br>
+
+
+
+
+
+>코드
+
+
+```c#
+public class Solution
+{
+    public int LengthOfLongestSubstring(string s)
+    {
+        HashSet<char> hash = new HashSet<char>();
+        int startIndex = 0;
+        int lastIndex = 0;
+        int ret = 0;
+        int strLength = s.Length;
+
+        while (lastIndex < s.Length)
+        {
+            if (!hash.Contains(s[lastIndex]))
+            {//안겹치면
+                hash.Add(s[lastIndex]);
+                lastIndex++;
+                ret = Math.Max(ret, lastIndex - startIndex);
+                continue;
+            }
+            //겹치면
+            hash.Remove(s[startIndex]);
+            startIndex++;
+        }
+        return ret;
+    }
+}
+```
+> 양쪽 인덱스를 구별하여 
+해시에 겹치지 않으면 오른쪽 인덱스를 늘리고 
+겹치는경우에 왼쪽 인덱스를 늘려 가장 긴 길이의 문자열을 찾음
