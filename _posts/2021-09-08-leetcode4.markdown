@@ -1,0 +1,33 @@
+---
+layout: post
+title: LeetCode4. Median of Two Sorted Arrays
+date:  +0900
+category: Algorithm
+---
+### LeetCode 4. Median of Two Sorted Arrays
+
+
+![](/assets/img/leetcode/4.png)
+- 정렬된 두개의 배열의 중앙값 구하기!
+- 평균값이 아님!
+<br><br>
+
+
+
+
+
+>코드
+
+
+```c#
+public class Solution {
+    public double FindMedianSortedArrays(int[] nums1, int[] nums2) {
+        
+    }
+}
+```
+
+> 해결중...
+
+<br><br>
+
