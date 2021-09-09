@@ -1,0 +1,62 @@
+---
+layout: post
+title: LeetCode5. Longest Palindromic Substring
+date: 2021-09-08 00:20:53 +0900
+category: Algorithm
+---
+### LeetCode 5. Longest Palindromic Substring
+
+![](/assets/img/leetcode/5.png)
+- 가장 긴 대칭문자열 구하기
+<br><br>
+
+
+
+
+
+>코드
+
+
+```c#
+public class Solution
+{
+    public string LongestPalindrome(string str)
+    {
+        if (str.Length < 1)
+        {
+            return str;
+        }
+
+        int startIndex = 0;
+        int length = 0;
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (i - length > 0 && str.Substring(i - length - 1, length + 2) == Reverse(str.Substring(i - length - 1, length + 2))) //두개씩 같은것!
+            {
+                startIndex = i - length - 1;
+                length += 2;
+            }
+            else if (str.Substring(i - length, length + 1) == Reverse(str.Substring(i - length, length + 1))) //두개짜리!
+            {
+                startIndex = i - length;
+                length++;
+            }             
+        }
+        
+        return str.Substring(startIndex, length);
+    }
+    static string Reverse(string text)
+    {
+        char[] charArray = text.ToCharArray();
+        Array.Reverse(charArray);
+        return new string(charArray);
+    }
+}
+```
+
+> i는 오른쪽 끝 startIndex는 왼쪽 끝으로 만든 문자열
+세상에서 제일 어려운 풀이법인듯
+
+<br><br>
+
