@@ -11,3 +11,7 @@ category: ETC
 ```c#
 print(hello world);
 ```
+
+```cpp
+visited.assign(m,vector<bool>(n,false));
+```
