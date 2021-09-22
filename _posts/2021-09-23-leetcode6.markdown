@@ -1,0 +1,178 @@
+---
+layout: post
+title: LeetCode6. ZigZag Conversion
+date: 2021-09-23 01:02:08 +0900
+category: Algorithm
+---
+### LeetCode 6. ZigZag Conversion
+
+
+![](/assets/img/leetcode/6.png)
+
+- 지그재그로 만들어 가로로 읽기!
+
+<br><br>
+
+>코드
+
+
+```c#
+public class Solution
+{
+    char[,] charBuffer;
+    public string Convert(string s, int numRows)
+    {
+        charBuffer = new char[1001, 1001];
+        int x = 0, y = 0;
+        bool isZigZaging = false;
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (y < 0) y = 0;
+            charBuffer[y, x] = s[i];
+
+            if (isZigZaging)
+            {
+                if (y == 0)
+                {
+                    isZigZaging = false;
+                    y++;
+                    if (y >= numRows)
+                    {
+                        isZigZaging = true;
+                        x++;
+                        y--;
+                    }
+                }
+                else
+                {
+                    y--;
+                    x++;
+                }
+            }
+            else
+            {
+                if (y >= numRows-1)
+                {
+                    isZigZaging = true;
+                    x++;
+                    y--;
+                }
+                else
+                {
+                    y++;
+                }
+            }
+        }
+        char[] answer = new char[1001];
+
+        int charIndex = 0;
+        for (int i = 0; i < numRows; i++)
+        {
+            for (int j = 0; j < x + 1; j++)
+            {
+                if (charBuffer[i, j] != 0)
+                {
+                    answer[charIndex++] = charBuffer[i, j];
+                }
+            }
+        }
+        Array.Resize<char>(ref answer, charIndex);
+        string answerStr = new string(answer);
+        return answerStr;
+    }
+}
+```
+
+> 보이는대로 푼 쓰레기 코드
+
+
+<br><br>
+
+> 코드 개선!
+```c#
+public class Solution
+{
+    public string Convert(string s, int numRows)
+    {
+        if (numRows == 1) return s;
+
+        bool[] isVisited = new bool[s.Length];
+        char[] answer = new char[s.Length];
+        int charIndex = -1, charOffset = 0;
+        for (int i = 0; i < s.Length; i++)
+        {
+            charIndex++; //다음기준으로 넘어가기
+            if (charIndex * (numRows * 2 - 2) >= s.Length + (numRows * 2 - 2)) //다시 처음으로 돌아감 Offset을 벌린채로
+            {
+                charIndex = 0;
+                charOffset++;
+            }
+
+            bool isIplus = false;
+            int small = charIndex * (numRows * 2 - 2) - charOffset;
+            int big = charIndex * (numRows * 2 - 2) + charOffset;
+            if (small >= 0 && small < s.Length && !isVisited[small])
+            {
+                answer[i] = s[small];
+                isVisited[small] = true;
+                isIplus = true;
+                i++;
+            }
+            if (big >= 0 && big < s.Length && !isVisited[big])
+            {
+                answer[i] = s[big];
+                isVisited[big] = true;
+                isIplus = true;
+                i++;
+            }
+            i--;
+        }
+        string answerStr = new string(answer);
+        return answerStr;
+    }
+}
+```
+
+> 기준을 잡아 넘어가며 모으는 식으로 풀이
+Visited 같은거 안써야 함...
+
+<br><br>
+
+> 첫번째 코드 개선!
+
+
+```c#
+public class Solution {
+    public string Convert(string s, int numRows) {
+        if(numRows == 1 || numRows >= s.Length)
+            return s;
+        bool direction = false;
+        string rtnValue = "";
+        string [] rows = new string[numRows];
+        int row = 0;
+        for(var i = 0; i < s.Length; i++)
+        {
+            rows[row] += s[i]; //가로로 옮기며 세로로 쌓음
+            if(!direction) //대각선이 아닌경우
+            {
+                row++; //오른쪽으로 가고
+            }
+            else 
+            {
+                row--; //왼쪽으로 감
+            }
+            
+            if(row == 0 || row == (numRows - 1)) //왼쪽끝까지 온경우 or 오른쪽끝에 닿은경우
+                direction = !direction; //방향 바꾸기
+        }
+        
+        for(var i = 0; i < numRows; i++) //세로로 쌓아논 아이대로 넣기
+        {
+            rtnValue += rows[i];
+        }
+        return rtnValue;
+    }
+}
+```
+
+> 가면서 쌓는 느낌! 매우 직관적 풀이!
