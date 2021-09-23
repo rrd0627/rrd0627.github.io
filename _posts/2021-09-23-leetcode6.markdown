@@ -89,6 +89,7 @@ public class Solution
 <br><br>
 
 > 코드 개선!
+
 ```c#
 public class Solution
 {
