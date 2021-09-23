@@ -1,0 +1,77 @@
+---
+layout: post
+title: LeetCode8. String to Integer (atoi)
+date: 2021-09-23 23:43:21 +0900
+category: Algorithm
+---
+### LeetCode 8. String to Integer (atoi)
+
+![](/assets/img/leetcode/8.png)
+
+- atoi 구현하기!
+
+<br><br>
+
+>코드
+
+
+```c#
+public class Solution
+{
+    public int MyAtoi(string s)
+    {
+        if (s.Length <= 0) return 0;
+
+        //1. space
+        int charIndex = 0;
+        while (s[charIndex] == ' ')
+        {
+            charIndex++;
+            if (charIndex >= s.Length) return 0;
+        }
+
+        //2. + -
+        bool isNegative = false;
+        if (s[charIndex] == '+')
+        {
+            charIndex++;
+        }
+        else if (s[charIndex] == '-')
+        {
+            isNegative = true;
+            charIndex++;
+        }
+
+
+
+        //3. non digit
+        s = s.Substring(charIndex);
+        charIndex = 0;
+        if (charIndex >= s.Length) return 0;
+        while (s[charIndex] >= '0' && s[charIndex] <= '9')
+        {
+            charIndex++;
+            if (charIndex >= s.Length) break;
+        }
+        s = s.Substring(0, charIndex);
+
+        if(s.Length<=0)return 0;
+
+        if (isNegative)
+        {
+            s = "-" + s;
+        }
+
+        //4. integer Clamp        
+        if (!int.TryParse(s, out int result))
+        {
+            if(isNegative)result = int.MinValue;
+            else result = int.MaxValue;
+        }
+        return result;
+    }
+}
+```
+
+> 보이는대로 푼 코드 인데 TryParse를 안쓰고 구현했어야 하는듯...
+직접 s하나씩 풀어서 * 10 하면서... 하지만 직관적 풀이!
