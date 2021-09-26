@@ -1,0 +1,67 @@
+---
+layout: post
+title: LeetCode 11. Container With Most Water
+date: 2021-09-26 23:43:14 +0900
+category: Algorithm
+---
+### LeetCode 11. Container With Most Water
+
+![](/assets/img/leetcode/11.png)
+
+- 제일 큰 넓이 구하기
+
+<br><br>
+
+>코드
+
+
+```c#
+public class Solution
+{
+    public int MaxArea(int[] height)
+    {
+        int left = 0;
+        int right = height.Length - 1;
+        int answer = 0;
+
+        while (left < right)
+        {
+            int min = (right - left) * Math.Min(height[left], height[right]);
+            answer = Math.Max(min,answer);
+
+            //left 가 작으면 left를 옮기고            
+            //right가 작으면 right를 옮김
+            if (height[left] < height[right])
+            {
+                int leftSize = height[left];
+                while (left < right)
+                {
+                    left++;
+                    if (leftSize < height[left])
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                int rightSize = height[right];
+                while (left < right)
+                {
+                    right--;
+                    if (rightSize < height[right])
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        return answer;
+    }
+}
+```
+
+> 더 큰 높이가 있어야지만 더 넓은 면적을 구할 수 있기 때문에
+더 큰 높이가 있는지 확인하고 해당 라인으로 옮겨서 다시 체크하는 방식!
+
+>왼쪽 오른쪽 인덱스 중에서 더 작은것을 먼저 옮겨서 커질 수 있는 모든 모양을 체크!
