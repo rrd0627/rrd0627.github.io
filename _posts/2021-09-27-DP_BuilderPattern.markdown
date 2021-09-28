@@ -14,14 +14,6 @@ category: DesignPattern
 <br/>
 <br/>
 
-```c#
-class Unit : MonoBehaviour
-{
-    
-}
-```
-
-
 
 ```c#
 interface IUnitBuilder
@@ -36,13 +28,18 @@ interface IUnitBuilder
 
 
 ```c#
-class TankBuilder : MonoBehaviour , IUnitBuilder
+class TankBuilder : IUnitBuilder
 {
     private Unit _unit;
 
     public Unit getUnit()
     {
         return _unit;
+    }
+
+    public TankBuilder()
+    {
+        _unit = new Unit();
     }
     
     public void BuildFrame()
@@ -62,13 +59,18 @@ class TankBuilder : MonoBehaviour , IUnitBuilder
 
 
 ```c#
-class SwordBuilder : MonoBehaviour , IUnitBuilder
+class SwordBuilder : IUnitBuilder
 {
     private Unit _unit;
 
     public Unit getUnit()
     {
         return _unit;
+    }
+
+    public SwordBuilder()
+    {
+        _unit = new Unit();
     }
     
     public void BuildFrame()
