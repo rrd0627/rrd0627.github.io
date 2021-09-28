@@ -16,108 +16,81 @@ category: DesignPattern
 
 
 ```c#
-interface IUnitBuilder
+//Implementation in C#.
+class Pizza
 {
-    Unit getUnit();
-    
-    void BuildFrame();
-    void BuildWeapon();
-    void BuildMove();    
+    string dough;
+    string sauce;
+    string topping;
+    public Pizza() {}
+    public void SetDough( string d){ dough = d;}
+    public void SetSauce( string s){ sauce = s;}
+    public void SetTopping( string t){ topping = t;}
 }
-```
 
-
-```c#
-class TankBuilder : IUnitBuilder
+//Abstract Builder
+abstract class PizzaBuilder
 {
-    private Unit _unit;
+    protected Pizza pizza;
+    public PizzaBuilder(){}
+    public Pizza GetPizza(){ return pizza; }
+    public void CreateNewPizza() { pizza = new Pizza(); }
 
-    public Unit getUnit()
-    {
-        return _unit;
-    }
-
-    public TankBuilder()
-    {
-        _unit = new Unit();
-    }
-    
-    public void BuildFrame()
-    {
-        print("장갑차");
-    }
-    public void BuildWeapon()
-    {
-        print("대포");
-    }
-    public void BuildMove()
-    {
-        print("바퀴");
-    }
+    public abstract void BuildDough();
+    public abstract void BuildSauce();
+    public abstract void BuildTopping();
 }
-```
 
-
-```c#
-class SwordBuilder : IUnitBuilder
+//Concrete Builder
+class HawaiianPizzaBuilder : PizzaBuilder
 {
-    private Unit _unit;
-
-    public Unit getUnit()
-    {
-        return _unit;
-    }
-
-    public SwordBuilder()
-    {
-        _unit = new Unit();
-    }
-    
-    public void BuildFrame()
-    {
-        print("사람몸");
-    }
-    public void BuildWeapon()
-    {
-        print("검");
-    }
-    public void BuildMove()
-    {
-        print("다리");
-    }
+    public override void BuildDough()   { pizza.SetDough("cross"); }
+    public override void BuildSauce()   { pizza.SetSauce("mild"); }
+    public override void BuildTopping() { pizza.SetTopping("ham+pineapple"); }
 }
-```
 
-```c#
-class UnitMaker
+//Concrete Builder
+class SpicyPizzaBuilder : PizzaBuilder
 {
-    public void Construct(IUnitBuilder unitBuilder)
-    {
-        unitBuilder.BuildFrame();
-        unitBuilder.BuildWeapon();    
-        unitBuilder.BuildMove();    
+    public override void BuildDough()   { pizza.SetDough("pan baked"); }
+    public override void BuildSauce()   { pizza.SetSauce("hot"); }
+    public override void BuildTopping() { pizza.SetTopping("pepparoni+salami"); }
+}
+
+/** "Director" */
+class Waiter {
+    private PizzaBuilder pizzaBuilder;
+
+    public void SetPizzaBuilder (PizzaBuilder pb) { pizzaBuilder = pb; }
+    public Pizza GetPizza() { return pizzaBuilder.GetPizza(); }
+
+    public void ConstructPizza() {
+        pizzaBuilder.CreateNewPizza();
+        pizzaBuilder.BuildDough();
+        pizzaBuilder.BuildSauce();
+        pizzaBuilder.BuildTopping();
+    }
+}
+
+/** A customer ordering a pizza. */
+class BuilderExample
+{
+    public static void Main(string[] args) {
+        Waiter waiter = new Waiter();
+        PizzaBuilder hawaiianPizzaBuilder = new HawaiianPizzaBuilder();
+        PizzaBuilder spicyPizzaBuilder = new SpicyPizzaBuilder();
+
+        waiter.SetPizzaBuilder ( hawaiianPizzaBuilder );
+        waiter.ConstructPizza();
+
+        Pizza pizza = waiter.GetPizza();
     }
 }
 ```
-
-```c#
-class UnitManager : MonoBehaviour
-{    
-    void Start()
-    {
-        UnitMaker unitMaker = new UnitMaker();
-        
-        SwordBuilder swordBuilder = GetComponent<SwordBuilder>();
-        TankBuilder tankBuilder = GetComponent<TankBuilder>();
-
-        unitMaker.Construct(swordBuilder);
-        unitMaker.Construct(tankBuilder);
-
-        Unit swordUnit = swordBuilder.getUnit();
-        Unit tankUnit = tankBuilder.getUnit();
-    }
-}
-```
+>출처 : 나무위키
 
 <br/>
 <br/>
+
+웨이터가 레시피와 피자를 가지고 있고 주문을 받은것대로 **세팅후** 돌려준다
+여기서 중요한것은 레시피 *(PizzaBuilder)* 대로 조합하여 세팅하는것!
