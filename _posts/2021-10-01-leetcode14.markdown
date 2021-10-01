@@ -1,0 +1,43 @@
+---
+layout: post
+title: LeetCode 14. Longest Common Prefix
+date: 2021-10-01 18:57:50 +0900
+category: Algorithm
+---
+### LeetCode 14. Longest Common Prefix
+
+![](/assets/img/leetcode/14.png)
+
+- 앞에서부터 공통된 글자 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public string LongestCommonPrefix(string[] strs)
+    {
+        if (strs.Length == 0) return "";
+
+        for (int i = 0; i < strs[0].Length; i++)
+        {
+            for (int j = 1; j < strs.Length; j++)
+            {
+                if (i == strs[j].Length || strs[0][i] != strs[j][i])
+                {
+                    return strs[0].Substring(0, i);
+                }
+            }
+        }
+        return strs[0];
+    }
+}
+
+```
+
+보이는 String 을 하나씩 검사해서 첫번째 것과 같은지 체크
+같지 않거나 최대 크기까지 가면 리턴!
+
+<br><br>
