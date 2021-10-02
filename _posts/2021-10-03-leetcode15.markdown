@@ -1,0 +1,64 @@
+---
+layout: post
+title: LeetCode 15. 3Sum
+date: 2021-10-03 02:06:05 +0900
+category: Algorithm
+---
+### LeetCode 15. 3Sum
+
+![](/assets/img/leetcode/15.png)
+
+- 3개 합이 0이 되는 집합 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public IList<IList<int>> ThreeSum(int[] nums)
+    {
+        List<IList<int>> ret = new List<IList<int>>();
+        if (nums.Length <= 2) return ret;
+        Array.Sort(nums);
+        int left, right;
+        for (int i = 0; i < nums.Length - 2; i++)
+        {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int target = -nums[i];
+            left = i + 1;
+            right = nums.Length - 1;
+
+            while (left < right)
+            {
+                if (nums[left] + nums[right] > target)
+                {
+                    right--;
+                }
+                else if (nums[left] + nums[right] < target)
+                {
+                    left++;
+                }
+                else
+                {
+                    ret.Add(new List<int>() { nums[i], nums[left], nums[right] });
+                    left++;
+                    while (left < right && nums[left - 1] == nums[left])
+                    {
+                        left++;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+}
+
+```
+
+주어진 배열을 sorting하고 작은 숫자부터 검색해나가는 방식
+풀고보면 직관적인 풀인데 빠르게 하려면 어떻게 해야하는지 고민하느라 2시간 가까이 씀...처음에 했던 hash map 풀이가 너무 더러웠다...
+
+<br><br>
