@@ -1,0 +1,45 @@
+---
+layout: post
+title: LeetCode 16. 3Sum Closest
+date: 2021-10-04 01:22:16 +0900
+category: Algorithm
+---
+### LeetCode 16. 3Sum Closest
+
+![](/assets/img/leetcode/16.png)
+
+- 3개 숫자 합이 target과 가장가까운 합 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int ThreeSumClosest(int[] nums, int target)
+    {
+        int ret = 0, diff = 999999;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            for (int j = i + 1; j < nums.Length; j++)
+            {
+                for (int l = j + 1; l < nums.Length; l++)
+                {
+                    if (Math.Abs(nums[i] + nums[j] + nums[l] - target) < diff)
+                    {
+                        ret = nums[i] + nums[j] + nums[l];
+                        diff = Math.Abs(ret - target);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+}
+
+```
+
+피곤해서 당장 커밋을 위한 쓰레기 코드...
+
+<br><br>
