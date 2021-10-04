@@ -43,3 +43,55 @@ public class Solution
 피곤해서 당장 커밋을 위한 쓰레기 코드...
 
 <br><br>
+
+>개선코드
+
+```c#
+public class Solution
+{
+    public int ThreeSumClosest(int[] nums, int target)
+    {
+        int ret = 0, diff = 999999;
+        Array.Sort(nums);
+        for (int i = 0; i < nums.Length - 2; i++)
+        {
+            int left = i + 1;
+            int right = nums.Length - 1;
+
+            int sum;
+
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            while (left < right)
+            {
+                sum = nums[i] + nums[left] + nums[right];
+
+                if (Math.Abs(sum - target) < diff)
+                {
+                    ret = sum;
+                    diff = Math.Abs(sum - target);
+                }
+
+                if (sum > target)
+                {
+                    right--;
+                }
+                else if (sum < target)
+                {
+                    left++;
+                }
+                else
+                {
+                    return ret;
+                }
+            }
+        }
+        return ret;
+    }
+}
+
+```
+
+정렬 후 찾아가기 
+
+<br><br>
