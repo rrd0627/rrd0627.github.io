@@ -1,0 +1,72 @@
+---
+layout: post
+title: LeetCode 18. 4Sum
+date: 2021-10-05 23:24:49 +0900
+category: Algorithm
+---
+### LeetCode 18. 4Sum
+
+![](/assets/img/leetcode/18.png)
+
+- 4개의 합이 target이 되는 집합 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public IList<IList<int>> FourSum(int[] nums, int target)
+    {
+        List<IList<int>> ret = new List<IList<int>>();
+
+        if (nums.Length <= 3) return ret;
+        Array.Sort(nums);
+
+        int left, right;
+        for (int i = 0; i < nums.Length - 3; i++)
+        {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            for (int j = i + 1; j < nums.Length - 2; j++)
+            {
+                if (j > i+1 && nums[j] == nums[j - 1])
+                {
+                    continue;
+                }
+                left = j + 1;
+                right = nums.Length - 1;
+
+                while (left < right)
+                {
+                    if (nums[i] + nums[j] + nums[left] + nums[right] > target)
+                    {
+                        right--;
+                    }
+                    else if (nums[i] + nums[j] + nums[left] + nums[right] < target)
+                    {
+                        left++;
+                    }
+                    else
+                    {
+                        ret.Add(new List<int>() { nums[i], nums[j], nums[left], nums[right] });
+                        left++;
+                        while (left < right && nums[left - 1] == nums[left])
+                        {
+                            left++;
+                        }
+                    }
+                }
+            }
+        }
+
+        return ret;
+    }
+}
+
+```
+
+15번 문제 -> 3개의 합을 활용한 문제풀이
+continue는 처음것은 제외시키고 같은것은 넘어가기
+
+<br><br>
