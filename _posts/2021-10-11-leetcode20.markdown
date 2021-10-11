@@ -1,0 +1,70 @@
+---
+layout: post
+title: LeetCode 19. Remove Nth Node From End of List
+date: 2021-10-11 21:41:18 +0900
+category: Algorithm
+---
+### LeetCode 19. Remove Nth Node From End of List
+
+![](/assets/img/leetcode/19.png)
+
+- 뒤에서 n번째 리스트 노드 지우기
+
+<br><br>
+
+>코드
+
+```c#
+public class ListNode
+{
+    public int val;
+    public ListNode next;
+    public ListNode(int val = 0, ListNode next = null)
+    {
+        this.val = val;
+        this.next = next;
+    }
+}
+
+public class Solution
+{
+    public ListNode RemoveNthFromEnd(ListNode head, int n)
+    {
+        if(head.next == null)
+        {
+            return null;
+        }
+
+        ListNode[] listArr = new ListNode[31];
+        ListNode curNode = head;
+        int curIndex = 0;
+
+        while (curNode != null)
+        {
+            listArr[curIndex++] = curNode;
+            curNode = curNode.next;
+        }
+
+        //맨앞을 없애는경우
+        if (curIndex - n - 1 < 0)
+        {
+            head = head.next;
+        }
+        else
+        {
+            listArr[curIndex - n - 1].next = listArr[curIndex - n + 1];
+        }
+
+        return head;
+    }
+}
+
+```
+
+제약 조건을 활용하여 31개만 배열 생성하고 배열에 다 넣음
+<br>
+배열 인덱스로 n위치를 찾고 
+<br>
+n 전과 후를 이어주면 원래것 그대로 리턴!
+
+<br><br>
