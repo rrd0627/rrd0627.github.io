@@ -9,88 +9,73 @@ category: DesignPattern
 
 > 내부 상태에 따라 스스로 행동을 변경 하는것을 허가하는 패턴
 
-**객체를 구성하는 부분을 생성하고 조합함으로 객체를 생성**
-
 <br/>
 <br/>
 
 
 ```c#
-//Implementation in C#.
-class Pizza
-{
-    string dough;
-    string sauce;
-    string topping;
-    public Pizza() {}
-    public void SetDough( string d){ dough = d;}
-    public void SetSauce( string s){ sauce = s;}
-    public void SetTopping( string t){ topping = t;}
+public interface PowerState {
+    public void powerPush();
 }
 
-//Abstract Builder
-abstract class PizzaBuilder
-{
-    protected Pizza pizza;
-    public PizzaBuilder(){}
-    public Pizza GetPizza(){ return pizza; }
-    public void CreateNewPizza() { pizza = new Pizza(); }
 
-    public abstract void BuildDough();
-    public abstract void BuildSauce();
-    public abstract void BuildTopping();
+public class On : PowerState{
+    public void powerPush(){
+        System.out.println("전원 off");
+    }
 }
-
-//Concrete Builder
-class HawaiianPizzaBuilder : PizzaBuilder
-{
-    public override void BuildDough()   { pizza.SetDough("cross"); }
-    public override void BuildSauce()   { pizza.SetSauce("mild"); }
-    public override void BuildTopping() { pizza.SetTopping("ham+pineapple"); }
+public class Off : PowerState {
+    public void powerPush(){
+        System.out.println("절전 모드");
+    }
 }
-
-//Concrete Builder
-class SpicyPizzaBuilder : PizzaBuilder
-{
-    public override void BuildDough()   { pizza.SetDough("pan baked"); }
-    public override void BuildSauce()   { pizza.SetSauce("hot"); }
-    public override void BuildTopping() { pizza.SetTopping("pepparoni+salami"); }
-}
-
-/** "Director" */
-class Waiter {
-    private PizzaBuilder pizzaBuilder;
-
-    public void SetPizzaBuilder (PizzaBuilder pb) { pizzaBuilder = pb; }
-    public Pizza GetPizza() { return pizzaBuilder.GetPizza(); }
-
-    public void ConstructPizza() {
-        pizzaBuilder.CreateNewPizza();
-        pizzaBuilder.BuildDough();
-        pizzaBuilder.BuildSauce();
-        pizzaBuilder.BuildTopping();
+public class Saving : PowerState {
+    public void powerPush(){
+        System.out.println("전원 on");
     }
 }
 
-/** A customer ordering a pizza. */
-class BuilderExample
-{
-    public static void Main(string[] args) {
-        Waiter waiter = new Waiter();
-        PizzaBuilder hawaiianPizzaBuilder = new HawaiianPizzaBuilder();
-        PizzaBuilder spicyPizzaBuilder = new SpicyPizzaBuilder();
 
-        waiter.SetPizzaBuilder ( hawaiianPizzaBuilder );
-        waiter.ConstructPizza();
+public class Laptop {
+    private PowerState powerState;
 
-        Pizza pizza = waiter.GetPizza();
+    public Laptop(){
+        this.powerState = new Off();
+    }
+
+    public void setPowerState(PowerState powerState){
+        this.powerState = powerState;
+    }
+
+    public void powerPush(){
+        powerState.powerPush();
     }
 }
+
+
+public class Client {
+    public static void main(String args[]){
+        Laptop laptop = new Laptop();
+        On on = new On();
+        Off off = new Off();
+        Saving saving = new Saving();
+
+        laptop.powerPush();
+        laptop.setPowerState(on);
+        laptop.powerPush();
+        laptop.setPowerState(saving);
+        laptop.powerPush();
+        laptop.setPowerState(off);
+        laptop.powerPush();
+        laptop.setPowerState(on);
+        laptop.powerPush();
+    }
+}
+
 ```
->출처 : 나무위키
 
 <br/>
 <br/>
 
-웨이터가 레시피와 피자를 가지고 있고 주문을 받은것대로 **세팅후** 돌려준다
-여기서 중요한것은 레시피 *(PizzaBuilder)* 대로 조합하여 세팅하는것!
+같은 버튼을 누르지만 상태에 따라 다르게 바뀜!
+분기문을 처리하는데 사용됨!
