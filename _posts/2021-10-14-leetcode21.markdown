@@ -1,0 +1,61 @@
+---
+layout: post
+title: LeetCode 21. Merge Two Sorted Lists
+date: 2021-10-14 23:46:49 +0900
+category: Algorithm
+---
+### LeetCode 21. Merge Two Sorted Lists
+
+![](/assets/img/leetcode/21.png)
+
+- 두개의 정렬된 리스트 합치기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public ListNode MergeTwoLists(ListNode l1, ListNode l2)
+    {
+        ListNode retList = new ListNode();
+        ListNode curNode = retList;
+
+        while (l1 != null && l2 != null)
+        {
+            if (l1.val >= l2.val)
+            {
+                curNode.next = l2;
+                l2 = l2.next;
+            }
+            else
+            {
+                curNode.next = l1;
+                l1 = l1.next;
+            }
+            curNode = curNode.next;
+        }
+        
+        if (l1 != null)
+        {
+            curNode.next = l1;
+        }
+        else if (l2 != null)
+        {
+            curNode.next = l2;
+        }
+
+        return retList.next;
+    }
+}
+
+```
+
+리스트를 활용하는 문제의 경우 먼저 리턴할 Head 노드를 정의함
+옮겨다닐 노드도 정의함
+
+옮겨다니며 정리!
+
+
+<br><br>
