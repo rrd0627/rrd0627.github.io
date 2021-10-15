@@ -1,0 +1,63 @@
+---
+layout: post
+title: LeetCode 22. Generate Parentheses
+date: 2021-10-16 02:10:19 +0900
+category: Algorithm
+---
+### LeetCode 22. Generate Parentheses
+
+![](/assets/img/leetcode/22.png)
+
+- n개의 괄호 집합들 구하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public IList<string> GenerateParenthesis(int n)
+    {
+        return GetList(n, 0, "");
+    }
+
+    public List<string> GetList(int openLeft, int curOpenStack, string curStr)
+    {
+        List<string> ret = new List<string>();
+        if (curOpenStack == 0)
+        {
+            if (openLeft == 0)
+            {
+                //끝
+                ret.Add(curStr);
+            }
+            else
+            {
+                //브라켓 열기
+                ret.AddRange(GetList(openLeft - 1, curOpenStack + 1, curStr + "("));
+            }
+        }
+        else
+        {
+            //닫기
+            ret.AddRange(GetList(openLeft, curOpenStack - 1, curStr + ")"));
+
+            if (openLeft > 0)
+            {//열기
+                ret.AddRange(GetList(openLeft - 1, curOpenStack + 1, curStr + "("));
+            }
+        }
+        return ret;
+    }
+}
+
+```
+
+리스트를 활용하는 문제의 경우 먼저 리턴할 Head 노드를 정의함
+옮겨다닐 노드도 정의함
+
+옮겨다니며 정리!
+
+
+<br><br>
