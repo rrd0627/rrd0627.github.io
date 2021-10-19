@@ -45,4 +45,17 @@ void Awake()
 }
 ```
 
-###
+
+
+<br><br>
+
+##Vsync(수직동기화)
+
+Vertical Synchronization 수직동기화
+
+백버퍼에 렌더링 되는동안 프론트버퍼와의 전환이 이루어지면
+화면이 섞여서 찢어지듯이 보여지기 때문에 이것을 방지하는것이 VSync.
+
+강제로 프레임이 떨어지기 때문에 targetFrameRate와 겹친다.
+
+성능 측정시에는 꺼줄것.
