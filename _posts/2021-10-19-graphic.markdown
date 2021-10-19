@@ -1,0 +1,48 @@
+---
+layout: post
+title: Graphics0
+date: 2021-09-01 17:48:15 +0900
+category: Graphics
+---
+
+> 더블 버퍼링
+
+프론트 버퍼  백 버퍼가 번갈아가면서 보이는 방식
+버퍼를 교환하기 때문에 서서히 바뀌는것이 아니라 한번에 갱신되는것 처럼 보임
+
+###병목
+
+> 선형적인 측정
+
+측정시 FPS가 아니라 FrameTime 으로 계산해야 선형적으로 나옴
+
+예시 : 
+90FPS = 1000/90 = 11ms
+45FPS = 1000/45 = 22ms
+30FPS = 1000.30 = 33ms
+
+FPS는 비선형적이고 **FrameTime**은 **선형적**으로 바뀜
+
+더 극단적으로
+900FPS = 1000/900 = 1.1ms
+450FPS = 1000/450 = 2.2ms
+
+60FPS = 1000/60 = 16.6ms
+56.5FPS = 1000.56.5 = 17.7ms
+
+둘다 1.1ms 가 올라갔지만 FPS는 심하게 차이가 남!
+
+<br><br>
+
+>Target Frame Rate
+
+강제로 최고 FPS를 설정하여 프로세서가 쉬는 환경을 만들기
+
+```csharp
+void Awake()
+{
+    Application.targetFrameRate = 40;
+}
+```
+
+###
