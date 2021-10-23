@@ -1,0 +1,50 @@
+---
+layout: post
+title: LeetCode 28. Implement strStr()
+date: 2021-10-24 01:26:03 +0900
+category: Algorithm
+---
+### LeetCode 28. Implement strStr()
+
+![](/assets/img/leetcode/28.png)
+
+- strStr 구현하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution {
+    public int StrStr(string haystack, string needle) {
+        
+        if(!haystack.Contains(needle))
+        {
+            Console.WriteLine("no!");
+            return -1;
+        }
+
+        int needleLen = needle.Length;
+
+        for(int i=0;i<haystack.Length - needleLen + 1;i++)
+        {
+            if(haystack.Substring(i,needleLen)==needle)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+}
+```
+
+보자마자 문제 별로 이해 안하고 푼 풀이
+
+다른 숫자가 나오면 대입하기
+
+더 좋은 풀이찾기 어려움...
+
+26번이랑 거의 뭐 똑같음,,
+
+<br><br>
