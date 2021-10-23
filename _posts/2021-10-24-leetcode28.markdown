@@ -20,7 +20,6 @@ public class Solution {
         
         if(!haystack.Contains(needle))
         {
-            Console.WriteLine("no!");
             return -1;
         }
 
@@ -34,17 +33,15 @@ public class Solution {
             }
         }
 
-        return -1;
+        return 0;
     }
 }
 ```
 
 보자마자 문제 별로 이해 안하고 푼 풀이
 
-다른 숫자가 나오면 대입하기
+하나씩 가면서 맞는것 찾기
 
-더 좋은 풀이찾기 어려움...
-
-26번이랑 거의 뭐 똑같음,,
+분명 더 좋은 풀이 많을것...
 
 <br><br>
