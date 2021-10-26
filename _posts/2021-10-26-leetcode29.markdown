@@ -1,0 +1,35 @@
+---
+layout: post
+title: LeetCode 29. Divide Two Integers
+date: 2021-10-26 22:42:10 +0900
+category: Algorithm
+---
+### LeetCode 29. Divide Two Integers
+
+![](/assets/img/leetcode/29.png)
+
+- 나눗셈 구현하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution {
+    public int Divide(int dividend, int divisor) {
+        int ret = int.MaxValue;
+
+        if(dividend == int.MinValue && divisor == -1)return ret;
+
+        ret = dividend / divisor;
+
+        return ret;
+    }
+}
+```
+
+보자마자 문제 별로 이해 안하고 푼 풀이
+
+나눗셈을 구현하라고 했는데 그냥 나눗셈을 활용한 풀이
+
+<br><br>
