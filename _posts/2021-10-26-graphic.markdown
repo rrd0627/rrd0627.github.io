@@ -1,0 +1,138 @@
+---
+layout: post
+title: Graphics0
+date: 2021-10-26 23:03:57 +0900
+category: Graphics
+---
+
+###드로우콜
+
+유니티는 멀티플랫폼 엔진이기 때문에 CPU 에서 GPU로 보내는 명령을 공통적인 API로 구성함
+API가 호출되면 드라이버 칩셋에 알맞은 신호를 전달하여 GPU에 맞게 명령을 해석하고 변형하는 과정을 거치기 때문에 오버헤드가 발생함.
+그래서 드로우콜은 CPU바운더리의 오버헤드가 된다!
+
+<br>
+
+> 드로우콜 발생 조건
+
+- 기본적으로 오브젝트 하나 그릴 때 메시가 1개, 머테리얼이 1개라면 Batch가 1!
+
+- 캐릭터가 여러개의 메시로 나누어져 있다면 그 갯수만큼의 드로우콜이 발생함.
+
+- 메시 하나에 머테리얼이 2개라면 드로우콜 역시 2개 발생
+
+- 쉐이더에 멀티패스를 사용하여 두번 이상 렌더링하는 경우 ( EX: 외곽선 그리기 ) 멀티패스의 수 만큼 드로우콜 발생
+
+
+
+> Batch
+
+배치는 DP Call과 상태변경들을 합친 넓은 의미의 드로우콜!
+
+> SetPass
+
+쉐이더로 인한 렌더링 패스 횟수
+
+머테리얼이 같은 오브젝트 10개는 SetPass가 1
+
+머테리얼이 다른 오브젝트 10개는 SetPass가 10 
+
+같은 배치가 10개라도 SetPass가 적은쪽이 효율이 좋음
+
+
+<br>
+
+###배칭
+
+> 드로우콜을 줄이는 작업
+
+동일한 머테리얼 인스턴스를 사용한다면 여러개의 메시를 배칭으로 1개의 배치로 만듦.
+
+> 스태틱 배칭
+
+오브젝트를 움직이지 않는다고 가정하고 버텍스 연산을 하지 않는 방법
+
+메모리가 추가로 필요함!
+
+오브젝트들을 하나로 합쳐서 내부적으로 하나의 거대한 메시로 만들어 메모리에 가지고 있다가 렌더링 하는것.
+
+> 다이나믹 배칭
+
+매 프레임 씬에서 다이나믹 오브젝트들의 버텍스들을 모아 합쳐주는 과정.
+
+모아서 GPU에서 한번에 렌더링 함
+
+매번 데이터 구축과 갱신이 발생하기 때문에 매 프레임 오버헤드가 발생함.
+
+하지만 드로우콜을 줄임으로 전체적인 성능 향상을 가져옴
+
+*Skinned Mesh에서 사용 불가능*
+*버텍스가 너무 많은 메시는 제외됨 ( 대략 300개 )*
+
+오브젝트의 버텍스를 월드스페이스로 변환하는것을 CPU에서 처리하여 드로우콜보다 많은 시간을 사용 할 수도 있음 ( 효율 떨어짐 )
+
+
+<br>
+
+###스키닝
+
+> 메시를 현재의 애니메이션 포즈에 맞게 변형하는 과정
+
+스켈레탈 애니메이션에 맞추어 메시의 버텍스를 보정해 주면서 메시가 변형되는 과정
+
+스키닝 연산은 CPU에서 일어남
+
+Edit > ProjectSetting > Player > Other Setting > GPU Skinning체크로 GPU 에서 연산할 수 있음
+
+
+###Mesh CombineMesh
+
+> Mesh.CombineMeshes 로 메시 합치기
+
+파츠별로 연결되어있는 오브젝트가 런타임중에 합쳐지는 경우에 사용
+
+머테리얼이 동일한경우에 사용
+
+```C#
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
+public class ExampleClass : MonoBehaviour
+{
+    void Start()
+    {
+        MeshFilter[] meshFilters = GetComponentsInChildren<MeshFilter>();
+        CombineInstance[] combine = new CombineInstance[meshFilters.Length];
+
+        int i = 0;
+        while (i < meshFilters.Length)
+        {
+            combine[i].mesh = meshFilters[i].sharedMesh;
+            combine[i].transform = meshFilters[i].transform.localToWorldMatrix;
+            meshFilters[i].gameObject.SetActive(false);
+
+            i++;
+        }
+        transform.GetComponent<MeshFilter>().mesh = new Mesh();
+        transform.GetComponent<MeshFilter>().mesh.CombineMeshes(combine);
+        transform.gameObject.SetActive(true);
+    }
+}
+```
+
+오브젝트의 자식 메시들을 수집하여 하나의 메시로 합쳐줌.
+
+**애초에 하나의 메시로 만들어지는것이 성능이 좋음**
+
+하지만 런타임 동안 파츠가 조합되어 만들어지는 경우라면 컴바인을 통해 드로우콜 줄이기
+
+<br>
+
+###2D 스프라이트 배칭
+
+설정하지 않더라도 자동으로 배칭이 이루어짐
+
+머테리얼이 동일해야 배칭이 가능한것은 똑같음
+
+스프라이트 아틀라스를 통해 이미지를 통합하여 배칭을 줄임
+
+
