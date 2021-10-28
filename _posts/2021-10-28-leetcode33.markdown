@@ -1,0 +1,71 @@
+---
+layout: post
+title: LeetCode 33. Search in Rotated Sorted Array
+date: 2021-10-28 18:09:44 +0900
+category: Algorithm
+---
+### LeetCode 33. Search in Rotated Sorted Array
+
+![](/assets/img/leetcode/33.png)
+
+- 나눗셈 구현하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution {
+    public int Search(int[] nums, int target) {
+        int ret =-1;
+        for(int i=0;i<nums.Length;i++)
+        {
+            if(nums[i] == target)
+                return i;
+        }
+        return ret;
+    }
+}
+```
+
+O(n) 풀이
+
+<br><br>
+
+```c#
+public class Solution
+{
+    public int Search(int[] nums, int target)
+    {
+        int lo = 0, hi = nums.Length - 1;
+
+        while (lo < hi)
+        {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] > nums[hi]) lo = mid + 1;
+            else hi = mid;
+        }
+
+        //lo == hi == 처음시작자리
+
+        int startIndex = lo;
+        lo = 0; hi = nums.Length - 1;
+
+        while (lo <= hi)
+        {
+            int mid = (lo + hi) / 2;
+            int realmid = (mid + startIndex) % nums.Length;
+            if (nums[realmid] == target) return realmid;
+            if (nums[realmid] < target) lo = mid + 1;
+            else hi = mid - 1;
+        }
+        return -1;
+    }
+}
+```
+
+O(log n) 풀이
+
+처음에 StartIndex를 바이너리 서치로 구하기
+
+StartIndex를 활용하여 Ordered 된 Array로 생각하여 바이너리 서치로 풀이!!
