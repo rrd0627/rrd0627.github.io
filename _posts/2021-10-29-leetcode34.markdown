@@ -1,0 +1,62 @@
+---
+layout: post
+title: LeetCode 34. Find First and Last Position of Element in Sorted Array
+date: 2021-10-29 14:30:30 +0900
+category: Algorithm
+---
+### LeetCode 34. Find First and Last Position of Element in Sorted Array
+
+![](/assets/img/leetcode/34.png)
+
+- 나눗셈 구현하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int[] SearchRange(int[] nums, int target)
+    {
+        int[] ret = new int[2] { -1, -1 };
+
+        int leftIndex, rightIndex;
+
+        int index = Array.BinarySearch<int>(nums, target);
+        
+        if(index<0)
+        {
+            return ret;
+        }
+
+
+        leftIndex = index; rightIndex = index;
+
+        while (leftIndex >= 0 && nums[leftIndex] == target)
+        {
+            leftIndex--;
+        }
+        leftIndex++;
+
+        while (rightIndex < nums.Length && nums[rightIndex] == target)
+        {
+            rightIndex++;
+        }
+        rightIndex--;
+
+        ret[0] = leftIndex;
+        ret[1] = rightIndex;
+
+        return ret;
+    }
+}
+```
+
+O(log n) 풀이
+
+BinarySearch 로 위치를 구함
+
+구하지 못했을때는 음수가 나오기 때문에 -1 리턴
+
+같은 target 숫자가 배열에 여러개 있을 수 있기때문에 left와 right로 구분해서 퍼져나감
