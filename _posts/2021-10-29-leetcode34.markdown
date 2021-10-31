@@ -8,7 +8,7 @@ category: Algorithm
 
 ![](/assets/img/leetcode/34.png)
 
-- 나눗셈 구현하기
+- 정렬된 배열에서 해당 Value는 어디서부터 어디까지 인가!
 
 <br><br>
 
