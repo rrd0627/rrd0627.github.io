@@ -1,0 +1,57 @@
+---
+layout: post
+title: LeetCode 36. Valid Sudoku
+date: 2021-11-02 22:31:56 +0900
+category: Algorithm
+---
+### LeetCode 36. Valid Sudoku
+
+![](/assets/img/leetcode/36.png)
+
+- 스도쿠 괜찮은지!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public bool IsValidSudoku(char[][] board)
+    {
+        HashSet<int>[] row = new HashSet<int>[9];
+        HashSet<int>[] column = new HashSet<int>[9];
+        HashSet<int>[] box = new HashSet<int>[9];
+
+        for(int i=0;i<9;i++)
+        {
+            row[i] = new HashSet<int>();
+            column[i] = new HashSet<int>();
+            box[i] = new HashSet<int>();
+        }
+
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (int.TryParse(board[i][j].ToString(), out int result))
+                {
+                    if (!row[i].Add(result)) return false;
+                    if (!column[j].Add(result)) return false;
+                    if (!box[(i / 3) * 3 + j / 3].Add(result)) return false;
+                }
+            }
+        }
+        return true;
+
+        
+    }
+}
+```
+
+일단 초기값에서 겹치는거 있나 확인용으로 만든 코드
+
+근데 통과해버림...
+
+여기다 하나씩 넣어서 되는지 확인하는것 까지 해야 진짜 스도쿠! 다음문제!
