@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Graphics0
+title: 병목
 date: 2021-10-22 00:38:58 +0900
 category: Graphics
 ---
