@@ -49,7 +49,7 @@ void Awake()
 
 <br><br>
 
-##Vsync(수직동기화)
+# Vsync(수직동기화)
 
 Vertical Synchronization 수직동기화
 

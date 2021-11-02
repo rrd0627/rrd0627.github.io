@@ -4,7 +4,7 @@ title: Rendering PipeLine
 date: 2021-09-01 17:48:15 +0900
 category: Graphics
 ---
-### Unity Script LifeCycle
+# Unity Script LifeCycle
 
 
 ![](/assets/img/graphics/2021-09-01-18-13-20.png)
@@ -12,7 +12,7 @@ category: Graphics
 출처: https://docs.unity3d.com/kr/530/Manual/ExecutionOrder.html
 
 
-### 렌더링 파이프라인
+# 렌더링 파이프라인
 
 > 1 . 어플리케이션 스테이지
 

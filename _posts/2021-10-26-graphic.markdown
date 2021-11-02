@@ -5,7 +5,7 @@ date: 2021-10-26 23:03:57 +0900
 category: Graphics
 ---
 
-###드로우콜
+# 드로우콜
 
 유니티는 멀티플랫폼 엔진이기 때문에 CPU 에서 GPU로 보내는 명령을 공통적인 API로 구성함
 API가 호출되면 드라이버 칩셋에 알맞은 신호를 전달하여 GPU에 맞게 명령을 해석하고 변형하는 과정을 거치기 때문에 오버헤드가 발생함.
@@ -42,7 +42,7 @@ API가 호출되면 드라이버 칩셋에 알맞은 신호를 전달하여 GPU�
 
 <br>
 
-###배칭
+# 배칭
 
 > 드로우콜을 줄이는 작업
 
@@ -74,7 +74,7 @@ API가 호출되면 드라이버 칩셋에 알맞은 신호를 전달하여 GPU�
 
 <br>
 
-###스키닝
+# 스키닝
 
 > 메시를 현재의 애니메이션 포즈에 맞게 변형하는 과정
 
@@ -85,7 +85,7 @@ API가 호출되면 드라이버 칩셋에 알맞은 신호를 전달하여 GPU�
 Edit > ProjectSetting > Player > Other Setting > GPU Skinning체크로 GPU 에서 연산할 수 있음
 
 
-###Mesh CombineMesh
+# Mesh CombineMesh
 
 > Mesh.CombineMeshes 로 메시 합치기
 
