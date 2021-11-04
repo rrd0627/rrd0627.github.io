@@ -1,0 +1,120 @@
+---
+layout: post
+title: LeetCode 37. Sudoku Solver
+date: 2021-11-04 21:35:54 +0900
+category: Algorithm
+---
+### LeetCode 37. Sudoku Solver
+
+![](/assets/img/leetcode/37.png)
+
+- 스도쿠 풀이!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    HashSet<int>[] _rowHash = new HashSet<int>[9];
+    HashSet<int>[] _columnHash = new HashSet<int>[9];
+    HashSet<int>[] _boxHash = new HashSet<int>[9];
+
+    char[] DIGIT = new char[9] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    Dictionary<char, int> _charToInt = new Dictionary<char, int>();
+    public void SolveSudoku(char[][] board)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            _rowHash[i] = new HashSet<int>();
+            _columnHash[i] = new HashSet<int>();
+            _boxHash[i] = new HashSet<int>();
+            _charToInt.Add(DIGIT[i], i + 1);
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (board[i][j] != '.')
+                {
+                    _rowHash[i].Add(_charToInt[board[i][j]]);
+                    _columnHash[j].Add(_charToInt[board[i][j]]);
+                    _boxHash[(i / 3) * 3 + j / 3].Add(_charToInt[board[i][j]]);
+                }
+            }
+        }
+        Sudoku(0, 0, ref board);
+
+        return;
+    }
+
+    private bool Sudoku(int vertical, int horizontal, ref char[][] board)
+    {
+        if (vertical >= 9)
+        {
+            return true;
+        }
+        if (horizontal >= 9)
+        {
+            return Sudoku(vertical + 1, 0, ref board);
+        }
+
+        if (board[vertical][horizontal] != '.')
+        {
+            //이미 숫자가 들어가있으면 다음으로 넘김
+            return Sudoku(vertical, horizontal + 1, ref board);
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            if (CanInput(vertical, horizontal, i + 1, ref board))
+            {
+                //넣을 수 있음! 넣기!
+                board[vertical][horizontal] = DIGIT[i];
+
+                if (Sudoku(vertical, horizontal + 1, ref board)) return true;
+
+                //지금 자리는 틀렸다는소리! 다시 빼주기
+                board[vertical][horizontal] = '.';
+
+                _rowHash[vertical].Remove(i + 1);
+                _columnHash[horizontal].Remove(i + 1);
+                _boxHash[(vertical / 3) * 3 + horizontal / 3].Remove(i + 1);
+            }
+        }
+
+        return false;
+    }
+
+    private bool CanInput(int vertical, int horizontal, int num, ref char[][] board)
+    {
+        if (!_rowHash[vertical].Add(num))
+        {
+            return false;
+        }
+        if (!_columnHash[horizontal].Add(num))
+        {
+            _rowHash[vertical].Remove(num);
+            return false;
+        }
+        if (!_boxHash[(vertical / 3) * 3 + horizontal / 3].Add(num))
+        {
+            _rowHash[vertical].Remove(num);
+            _columnHash[horizontal].Remove(num);
+            return false;
+        }
+        return true;
+    }
+
+}
+```
+
+괜히 뭐 빨리 한다고 Hash쓰고 했는데 그런거 필요없고 그냥 단순하게 해도 됬음...
+
+for문 돌려서 들어가도 되는지 확인하고 그래도 됨.. add remove 하느라 더 오버헤드 생김
+
+여기 주목할만한것은 **int를 char로 바꿀때 10개 밖에없으니까 DIGIT이라는 배열을 생성해서 바로 접근하게 하기!**
+
+또는 **Dictionary를 활용해서 char를 int로**
