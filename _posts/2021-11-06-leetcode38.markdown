@@ -1,0 +1,65 @@
+---
+layout: post
+title: LeetCode 38. Count and Say
+date: 2021-11-06 00:25:38 +0900
+category: Algorithm
+---
+### LeetCode 38. Count and Say
+
+![](/assets/img/leetcode/38.png)
+
+- 지금 숫자에서 {같은숫자 몇개 + 해당숫자} 의 합으로 계속 나가기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    string[] cache;
+    public string CountAndSay(int n)
+    {
+        cache = new string[n + 1];
+        cache[1] = "1";
+
+        for (int i = 2; i <= n; i++)
+        {
+            solve(i);
+        }
+        return cache[n];
+    }
+
+    void solve(int n)
+    {
+        string lastStr = cache[n - 1];
+
+        int strIndex = 0;
+        char curChar = lastStr[strIndex];
+        char nextChar;
+        int repeatNum = 1;
+        while (lastStr.Length - 1 > strIndex)
+        {
+            nextChar = lastStr[strIndex + 1];
+            if (nextChar != curChar)
+            {//다음 숫자가 다르면
+                cache[n] += repeatNum.ToString() + curChar.ToString();
+                curChar = nextChar;
+                repeatNum = 1;
+            }
+            else
+            { //숫자가 같으면
+                repeatNum++;
+            }
+            strIndex++;
+        }
+        //마지막 0 번째 처리
+        cache[n] += repeatNum.ToString() + curChar.ToString();
+        return;
+    }
+}
+```
+
+그냥 보이는대로 처리함
+
+여기서 주목할만 한것은 **스트링의 0번째 인덱스는 맨 왼쪽것**이다!!
