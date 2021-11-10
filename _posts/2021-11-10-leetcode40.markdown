@@ -1,0 +1,89 @@
+---
+layout: post
+title: LeetCode 40. Combination Sum II
+date: 2021-11-10 23:55:51 +0900
+category: Algorithm
+---
+### LeetCode 40. Combination Sum II
+
+![](/assets/img/leetcode/40.png)
+
+- 후보들 숫자들을 한번만 써서 더하기로 타겟숫자 만들기! **같은 세트는 제외!**
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    int _length, _target;
+    List<IList<int>> ret;
+    public IList<IList<int>> CombinationSum2(int[] candidates, int target)
+    {
+        Array.Sort(candidates);
+
+        ret = new List<IList<int>>();
+
+        _length = candidates.Length;
+        _target = target;
+
+        func(ref candidates, 0, new List<int>(), 0);
+
+        return ret;
+
+    }
+
+    private void func(ref int[] candidates, int curIndex, List<int> list, int sum)
+    {
+
+        if (_target == sum)
+        {
+            ret.Add(new List<int>(list));
+            return;
+        }
+
+        if (_target < sum || curIndex >= _length)
+        {
+            return;
+        }
+
+
+        int nextIndex = curIndex + 1;
+
+        //겹치는거 처리하기
+        while (nextIndex < _length && candidates[curIndex] == candidates[nextIndex])
+        {
+            nextIndex++;
+        }
+
+        for (int i = 0; i < nextIndex - curIndex + 1; i++)
+        {
+            int newSum = 0;
+
+            for (int j = 0; j < i; j++)
+            {
+                list.Add(candidates[curIndex + j]);
+                newSum += candidates[curIndex + j];
+            }
+
+            func(ref candidates, nextIndex, list, sum + newSum);
+
+            for (int j = 0; j < i; j++)
+            {
+                list.Remove(candidates[curIndex + j]);
+            }
+        }
+    }
+}
+```
+
+겹치는 문제를 해결하기 위해서 먼저 Sorting 후에
+
+같은 숫자는 겹치는 갯수만큼만 더해지도록 함!
+
+> 만약 후보자가 1 1 1 1 2 3  이 있다면
+1이 4개 있으므로 1이 0개인 리스트 만들어 2로 감
+다시 1이 1개인것 리스트 만들어 2로 감
+1이 2개인것 리스트 만들어 2로 가기 때문에 
+**2에서 시작할때는 반드시 모두 다른 개수의 1을 가지고있다.**
