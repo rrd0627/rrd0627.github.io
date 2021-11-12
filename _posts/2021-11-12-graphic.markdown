@@ -1,0 +1,29 @@
+---
+layout: post
+title: 내장 쉐이더
+date: 2021-11-12 23:45:32 +0900
+category: Graphics
+---
+
+# 내장 쉐이더
+
+### 스탠다드 쉐이더
+
+스탠다드 쉐이더는 성능이 열악한 모바일 디바이스에 초점이 맞춰 있지 않기 때문에 적합하지 않음.
+
+스탠다드 쉐이더의 퀄리티는 Edit > Project Setting > Graphics 세팅에서 조절 가능!
+
+Tier Setting 에서 항목별로 Standard Shader Quality를 설정 할 수 있다.
+
+<br>
+
+불투명한 오브젝트는 반드시 Rendering Mode 를 Opaque로 해야 두번 그리는 오버드로우가 없다.
+
+Transparent로 설정되있으면 알파가 1이라도 한번더 그리게 됨
+
+CutOut방식이 PC나 콘솔 플랫폼에서는 좋은 방식이지만 모바일 디바이스에서는 **Transparent가 권장됨**.
+
+알파 테스트 쉐이더는 동적분기(if문)을 사용함.
+
+데스크탑 그래픽 칩셋은 동적 분기를 고속으로 처리할 수 있지만 **모바일 기기에서는 동적분기(if문)가 성능 저하**를 일으킴.
+
