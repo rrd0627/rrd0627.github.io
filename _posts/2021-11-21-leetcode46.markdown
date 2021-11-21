@@ -1,0 +1,48 @@
+---
+layout: post
+title: LeetCode 46. Permutations
+date: 2021-11-21 23:14:45 +0900
+category: Algorithm
+---
+### LeetCode 46. Permutations
+
+![](/assets/img/leetcode/46.png)
+
+- 순열 모두 보여주기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    List<IList<int>> ret = new List<IList<int>>();
+
+    public IList<IList<int>> Permute(int[] nums)
+    {
+        func(nums.ToList(),new List<int>());
+
+        return ret;
+    }
+
+    private void func(List<int> leftNums, List<int> retNums)
+    {
+        if (leftNums.Count == 0)
+        {
+            ret.Add(retNums);
+        }
+
+        for (int i = 0; i < leftNums.Count; i++)
+        {
+            List<int> newNums = new List<int>(leftNums);
+            newNums.Remove(leftNums[i]);
+            List<int> newRetNums = new List<int>(retNums);
+            newRetNums.Add(leftNums[i]);
+            func(newNums, newRetNums);
+        }
+    }
+}
+```
+
+dfs로 모든 노드 돌아서 모두 리턴!
