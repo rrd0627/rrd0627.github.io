@@ -1,0 +1,54 @@
+---
+layout: post
+title: LeetCode 42. Trapping Rain Water
+date: 2021-11-21 23:14:45 +0900
+category: Algorithm
+---
+### LeetCode 42. Trapping Rain Water
+
+![](/assets/img/leetcode/42.png)
+
+- 막대그래프에 얼마나 물이 담길까!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int Trap(int[] height)
+    {
+        int ret = 0;
+        int temp = 0;
+        int[] leftMax = new int[height.Length];
+        int[] rightMax = new int[height.Length];
+        int left = 0;
+        int right = 0;
+        for (int i = 0; i < height.Length; i++)
+        {
+            left = Math.Max(left, height[i]);
+            leftMax[i] = left;
+        }
+        for (int i = height.Length - 1; i >= 0; i--)
+        {
+            right = Math.Max(right, height[i]);
+            rightMax[i] = right;
+        }
+
+        for (int i = 0; i < height.Length; i++)
+        {
+            temp = Math.Min(leftMax[i], rightMax[i]) - height[i];
+            if (temp > 0)
+                ret += temp;
+        }
+        return ret;
+    }
+}
+```
+
+**내 위치에서 담기는 물의 높이는 왼쪽에 가장 높게 보이는 막대와 오른쪽에 가장 높게 보이는 막대중 낮은 막대이다!!**
+
+그러므로 각 위치에서 보이는 왼쪽 가장 높은 막대와 오른쪽 가장 높은 막대를 구하고
+
+각 위치마다 내 위치에서 담기는 물의 높이를 모두 더해줌!
