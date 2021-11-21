@@ -1,0 +1,57 @@
+---
+layout: post
+title: LeetCode 41. First Missing Positive
+date: 2021-11-21 23:14:45 +0900
+category: Algorithm
+---
+### LeetCode 41. First Missing Positive
+
+![](/assets/img/leetcode/41.png)
+
+- 배열에 없는 첫번째 자연수 찾기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int FirstMissingPositive(int[] nums)
+    {
+        Array.Sort(nums);
+        int ret = 1;
+
+        int startIndex = 0;
+        for (startIndex = 0; startIndex < nums.Length; startIndex++)
+        {
+            if (nums[startIndex] > 0) break;
+        }
+
+        for (int i = startIndex; i < nums.Length; i++)
+        {
+            if (nums[i] == ret)
+            {
+                ret++;
+            }
+            else if(nums[i] > ret)
+            {
+                return ret;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return ret;
+    }
+
+}
+```
+
+먼저 Sorting 후에 음수는 제외하도록 startindex를 조절하고
+
+ret값이 자연수를 따라가게 하여 만약 없는 자연수가 생기면
+
+즉 , 배열에 있는값이 더 먼저 커지면 해당 ret 자연수가 없기 때문에 리턴!
