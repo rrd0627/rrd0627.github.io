@@ -1,0 +1,52 @@
+---
+layout: post
+title: LeetCode 47. Permutations II
+date: 2021-11-22 23:36:52 +0900
+category: Algorithm
+---
+### LeetCode 47. Permutations II
+
+![](/assets/img/leetcode/47.png)
+
+- 순열 모두 보여주기 단 같은 숫자배열은 제외!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    List<IList<int>> ret = new List<IList<int>>();
+
+    public IList<IList<int>> PermuteUnique(int[] nums)
+    {
+        Array.Sort(nums);
+
+        func(nums.ToList(), new List<int>());
+
+        return ret;
+    }
+
+    private void func(List<int> leftNums, List<int> retNums)
+    {
+        if (leftNums.Count == 0)
+        {
+            ret.Add(retNums);
+        }
+        int prevNum = int.MaxValue;
+        for (int i = 0; i < leftNums.Count; i++)
+        {
+            if(prevNum == leftNums[i])continue;
+            prevNum = leftNums[i];
+            List<int> newNums = new List<int>(leftNums);
+            newNums.Remove(leftNums[i]);
+            List<int> newRetNums = new List<int>(retNums);
+            newRetNums.Add(leftNums[i]);
+            func(newNums, newRetNums);
+        }
+    }
+}
+```
+
+dfs로 모든 노드 돌아서 모두 리턴! 46번과 똑같은데 여기서 그전에 **이미 사용된 숫자는 또 바로 사용되면 중복**이 되기때문에 continue!
