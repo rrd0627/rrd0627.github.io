@@ -1,0 +1,78 @@
+---
+layout: post
+title: LeetCode 48. Rotate Image
+date: 2021-11-24 00:57:31 +0900
+category: Algorithm
+---
+### LeetCode 48. Rotate Image
+
+![](/assets/img/leetcode/48.png)
+
+- 시계방향으로 돌리기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public void Rotate(int[][] matrix)
+    {
+        int matrixLength = matrix.Length;
+        int oldTemp = 0, nextTemp = 0, posTemp = 0;
+
+        for (int i = 0; i < matrixLength/2; i++)
+        {
+            for (int j = i; j < matrixLength - i - 1; j++)
+            {
+                int posy = i;
+                int posx = j;
+                for (int k = 0; k < 5; k++)
+                {
+                    oldTemp = nextTemp;
+                    nextTemp = matrix[posy][posx];
+                    matrix[posy][posx] = oldTemp;
+
+                    posTemp = posy;
+                    posy = posx;
+                    posx = matrix.Length - posTemp - 1;
+                }
+            }
+        }
+    }
+}
+```
+
+다시 보면 진짜 이해 안될거같은 코드
+
+한 라인씩 위에서 훑을건데 x는 이미 바뀐곳은 건드리지 않기위해서 j를 통해 제한을 두고
+
+posy와 posx로 현재 위치를 구하고 총 5번반복하며 시계방향으로 돌아가며
+
+현재 위치로 시계방향으로 돌면서 다시 원래 자리로 돌아오며 4개의 배열 바꾸는 방법!
+
+빠르긴함!
+
+근데 아래것이 훨씬 편함
+
+>코드
+
+```c#
+public class Solution {
+    public void Rotate(int[][] matrix) {
+            Array.Reverse(matrix);
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    int val = matrix[i][j];
+                    matrix[i][j] = matrix[j][i];
+                    matrix[j][i] = val;
+                }
+            }  
+    }
+}
+```
+
+수학을 잘하면 손발이 편함...
