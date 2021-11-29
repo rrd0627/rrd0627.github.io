@@ -1,0 +1,61 @@
+---
+layout: post
+title: LeetCode 52. N-Queens II
+date: 2021-11-29 23:23:41 +0900
+category: Algorithm
+---
+### LeetCode 52. N-Queens II
+
+![](/assets/img/leetcode/52.png)
+
+- 퀸 겹치지 않게 놓기! 2탄!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    int arraySize;
+    public int TotalNQueens(int n)
+    {
+        arraySize = n;
+        int[,] diagonalLine = new int[arraySize, arraySize];
+        return dfs(0, 0, diagonalLine);
+    }
+
+    private int dfs(int horizontalLine, int verticalLine, int[,] diagonalLine)
+    {
+        if (horizontalLine >= arraySize)
+        {
+            return 1;
+        }
+        int retSum = 0;
+        for (int i = 0; i < arraySize; i++)
+        {
+            if ((verticalLine & 1 << i) != 0) continue; //세로 없애기
+            if (diagonalLine[horizontalLine, i] != 0) continue; //대각선 없애기
+
+            int[,] newArr = (int[,])diagonalLine.Clone();
+            for (int j = horizontalLine + 1; j < arraySize; j++)
+            {
+                if (i + j - horizontalLine < arraySize)
+                    newArr[j, i + j - horizontalLine] = 1;
+                if (i - j + horizontalLine >= 0)
+                    newArr[j, i - j + horizontalLine] = 1;
+            }
+            retSum += dfs(horizontalLine + 1, verticalLine | 1 << i, newArr);
+        }
+        return retSum;
+    }
+}
+```
+
+dfs로 확인하였음 이때 아래로 하나씩 내려가며 확인함
+
+세로줄은 비트마스크를 활용하여 확인하였고
+
+대각선은 둘때마다 대각선으로 선을 그은 배열을 다음 함수로 보내 확인함.
+
+이전 포스트 51번 포스트와 똑같다!
