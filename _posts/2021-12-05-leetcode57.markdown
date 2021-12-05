@@ -70,6 +70,9 @@ public class Solution
 마지막에 한번 더 Sort를 해줌
 
 겹치는 조건은 
+
 ```c#
 left <= intervals[i][1] && right >= intervals[i][0]
-``````
+```
+
+이걸로 해줌
