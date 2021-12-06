@@ -1,0 +1,40 @@
+---
+layout: post
+title: LeetCode 58. Length of Last Word
+date: 2021-12-06 22:24:26 +0900
+category: Algorithm
+---
+### LeetCode 58. Length of Last Word
+
+![](/assets/img/leetcode/58.png)
+
+- 마지막 문자 글자수 구하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int LengthOfLastWord(string s)
+    {
+        int curIndex = s.Length - 1;
+
+        while (s[curIndex] == ' ')
+        {
+            curIndex--;
+        }
+        int ret = curIndex;
+        while (curIndex >= 0 && s[curIndex] != ' ')
+        {
+            curIndex--;
+        }
+        return ret - curIndex;
+    }
+}
+```
+
+매우 쉬운문제
+
+뒤에서 부터 공백 없애고 문자열 찾아서 리턴
