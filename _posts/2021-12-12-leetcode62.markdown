@@ -1,0 +1,46 @@
+---
+layout: post
+title: LeetCode 62. Unique Paths
+date: 2021-12-12 16:58:59 +0900
+category: Algorithm
+---
+### LeetCode 62. Unique Paths
+
+![](/assets/img/leetcode/62.png)
+
+- 길 몇개 있는지 찾기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int UniquePaths(int m, int n)
+    {
+        int[,] pathArray = new int[m, n];
+
+        for (int i = 0; i < m; i++)
+        {
+            pathArray[i, 0] = 1;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            pathArray[0, i] = 1;
+        }
+
+        for (int i = 1; i < m; i++)
+        {
+            for (int j = 1; j < n; j++)
+            {
+                pathArray[i, j] = pathArray[i, j - 1] + pathArray[i - 1, j];
+            }
+        }
+
+        return pathArray[m - 1, n - 1];
+    }
+}
+```
+
+흔한 길찾기 알고리즘을 활용한 길찾기!
