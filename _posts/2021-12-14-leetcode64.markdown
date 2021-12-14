@@ -1,0 +1,48 @@
+---
+layout: post
+title: LeetCode 64. Minimum Path Sum
+date: 2021-12-14 22:54:14 +0900
+category: Algorithm
+---
+### LeetCode 64. Minimum Path Sum
+
+![](/assets/img/leetcode/64.png)
+
+- 가장 빠른길 찾기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int MinPathSum(int[][] grid)
+    {
+        int[] dp = new int[grid[0].Length];
+
+        dp[0] = grid[0][0];
+
+        for (int i = 1; i < dp.Length; i++)
+        {
+            dp[i] = dp[i - 1] + grid[0][i];
+        }
+
+        for (int i = 1; i < grid.Length; i++)
+        {
+            for (int j = 0; j < grid[0].Length; j++)
+            {
+                if (j == 0) dp[0] += grid[i][0];
+                else
+                {
+                    dp[j] = Math.Min(dp[j - 1] + grid[i][j], dp[j] + grid[i][j]);
+                }
+            }
+        }
+        return dp[dp.Length - 1];
+
+    }
+}
+```
+
+63번과 비슷하게 가장 짧은길 찾기! 이번엔 가중치가 있어서 더해야함!
