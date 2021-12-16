@@ -1,0 +1,51 @@
+---
+layout: post
+title: LeetCode 66. Plus One
+date: 2021-12-16 23:27:16 +0900
+category: Algorithm
+---
+### LeetCode 66. Plus One
+
+![](/assets/img/leetcode/66.png)
+
+- 배열로 만든숫자 1 키우기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int[] PlusOne(int[] digits)
+    {
+        for (int i = digits.Length - 1; i >= 0; i--)
+        {
+            if (digits[i] != 9)
+            {
+                digits[i]++;
+                return digits;
+            }
+            else
+            {
+                digits[i] = 0;
+                if (i == 0)
+                {
+                    int[] ret = new int[digits.Length + 1];
+                    ret[0] = 1;
+                    return ret;
+                }
+            }
+        }
+        return digits;
+    }
+}
+```
+
+뒤에서부터 9만 아니면 1키우고 리턴시키면 되고
+
+9면 0으로 만들고 다시 그 앞으로 감
+
+결국 끝까지가면 새로운 배열 만들어서 맨앞에 1넣음 
+
+전부 9999999....999 였으니까 그럼 10000000...000 이됨
