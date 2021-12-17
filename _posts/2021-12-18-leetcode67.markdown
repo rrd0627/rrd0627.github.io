@@ -1,0 +1,77 @@
+---
+layout: post
+title: LeetCode 67. Add Binary
+date: 2021-12-18 00:48:01 +0900
+category: Algorithm
+---
+### LeetCode 67. Add Binary
+
+![](/assets/img/leetcode/67.png)
+
+- 2진수 더하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public string AddBinary(string a, string b)
+    {
+        int maxLength = Math.Max(a.Length, b.Length);
+
+        int numA;
+        int numB;
+        int sum;
+        int carry = 0;
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (int i = 0; i < maxLength; i++)
+        {
+            if (i < a.Length)
+            {
+                numA = a[a.Length - 1 - i] == '0' ? 0 : 1;
+            }
+            else
+                numA = 0;
+            if (i < b.Length)
+            {
+                numB = b[b.Length - 1 - i] == '0' ? 0 : 1;
+            }
+            else
+                numB = 0;
+            sum = numA + numB + carry;
+
+            if (sum == 0)
+            {
+                stringBuilder.Insert(0, "0");
+                carry = 0;
+            }
+            else if (sum == 1)
+            {
+                stringBuilder.Insert(0, "1");
+                carry = 0;
+            }
+            else if (sum == 2)
+            {
+                stringBuilder.Insert(0, "0");
+                carry = 1;
+            }
+            else if (sum == 3)
+            {
+                stringBuilder.Insert(0, "1");
+                carry = 1;
+            }
+        }
+        if (carry == 1) stringBuilder.Insert(0, "1");
+        return stringBuilder.ToString();
+    }
+}
+```
+
+string 문제는 stringbuilder!
+
+더하기를 뒤해서부터 해야하기 때문에 Insert를 활용해 0번째 index에 넣는 방식을 사용함.
+
