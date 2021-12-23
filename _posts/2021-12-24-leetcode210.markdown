@@ -1,0 +1,86 @@
+---
+layout: post
+title: LeetCode 210. Course Schedule II
+date: 2021-12-24 01:45:43 +0900
+category: Algorithm
+---
+### LeetCode 210. Course Schedule II
+
+![](/assets/img/leetcode/210.png)
+
+- 위상정렬!!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int[] FindOrder(int numCourses, int[][] prerequisites)
+    {
+        Queue<int> orderQue = new Queue<int>();
+        List<List<int>> linkList = new List<List<int>>();
+        for (int i = 0; i < numCourses; i++)
+        {
+            List<int> tempList = new List<int>();
+            linkList.Add(tempList);
+        }
+        List<int> ret = new List<int>();
+
+        for (int i = 0; i < prerequisites.Length; i++)
+        {
+            linkList[prerequisites[i][0]].Add(prerequisites[i][1]);
+        }
+
+        // 1 들어오는게 없는 아이를 q에 넣음
+        for (int i = numCourses - 1; i >= 0; i--)
+        {
+            if (linkList[i].Count == 0)
+            {
+                orderQue.Enqueue(i);
+            }
+        }
+
+        // 2 q에서 꺼냄
+        while (orderQue.Count > 0)
+        {
+            int curNum = orderQue.Dequeue();
+            ret.Add(curNum);
+
+            //3 해당 Num 에서 들어가는 아이 없애고 q에 넣음
+            for (int i = 0; i < numCourses; i++)
+            {
+                //들어가는 아이가 있으면 빼주기
+                if (linkList[i].Contains(curNum))
+                {
+                    linkList[i].Remove(curNum);
+                    if (linkList[i].Count == 0)
+                    {
+                        orderQue.Enqueue(i);
+                    }
+                }
+            }
+        }
+
+        if (ret.Count == numCourses)
+            return ret.ToArray();
+        else
+        {
+            return new int[0];
+        }
+    }
+}
+```
+
+위상정렬 알고리즘  순서가 정해져있는 작업을 차례로 진행할때 순서를 결정하는 알고리즘
+
+1. 진입차수가 0 인 노드를 큐에 삽입하고 작업 순서에 Add
+2. 큐에서 원소를 빼내어 연결된 간선을 제거
+3. 진입차수가 0이 된 노드를 큐에 삽입하고 작업 순서에 Add
+4. 반복!
+
+알고리즘은 다음과 같다.
+
+
+알고리즘대로 하긴 했지만 더 좋은 방법이 반드시 존재함...
