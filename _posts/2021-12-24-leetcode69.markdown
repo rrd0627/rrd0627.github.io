@@ -1,0 +1,34 @@
+---
+layout: post
+title: LeetCode 69. Sqrt(x)
+date: 2021-12-24 01:45:43 +0900
+category: Algorithm
+---
+### LeetCode 69. Sqrt(x)
+
+![](/assets/img/leetcode/69.png)
+
+- 내가 만드는 제곱근 함수
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution {
+    public int MySqrt(int x) {
+        long ret = x;
+        while (ret*ret > x)
+            ret = (ret + x/ret) / 2;
+        return (int)ret;
+    }
+}
+```
+
+ret * ret 이 x 가 되도록하는것이 목표
+
+ret을 조금씩 작게 만드는데 
+
+가중치를 하나는 ret 하나는 ret * ret = x  에서    ret = x/ret
+
+으로 하여 조금씩 작게 만들어 ret이 제곱근에 수렴하도록 함!
