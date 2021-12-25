@@ -1,0 +1,53 @@
+---
+layout: post
+title: LeetCode 227. Basic Calculator II
+date: 2021-12-25 23:52:23 +0900
+category: Algorithm
+---
+### LeetCode 227. Basic Calculator II
+
+![](/assets/img/leetcode/227.png)
+
+- String 사칙연산을 파싱하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int Calculate(string s)
+    {
+        s += '+';
+        Stack<int> stack = new Stack<int>();
+        StringBuilder curNumStr = new StringBuilder();
+        int oldNum;
+        char oldOperator = '+';
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/')
+            {
+                int.TryParse(curNumStr.ToString(), out oldNum);
+                curNumStr.Clear();
+                if (oldOperator == '+') stack.Push(oldNum);
+                else if (oldOperator == '-') stack.Push(-oldNum);
+                else if (oldOperator == '*') stack.Push(stack.Pop() * oldNum);
+                else if (oldOperator == '/') stack.Push(stack.Pop() / oldNum);
+                oldOperator = s[i];
+                continue;
+            }
+            if (s[i] == ' ')
+            {
+                continue;
+            }
+            curNumStr.Append(s[i]);
+        }
+        return stack.Sum();
+    }
+}
+```
+
+for문 조건을 좀더 깔끔하게 하기 위한 처음에 + 넣기! 
+
+Stack을 활용하여 * 와 / 가 있는것을 블럭별로 관리하는 느낌!
