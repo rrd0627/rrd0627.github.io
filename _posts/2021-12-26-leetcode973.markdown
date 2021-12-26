@@ -1,0 +1,50 @@
+---
+layout: post
+title: LeetCode 973. K Closest Points to Origin
+date: 2021-12-26 21:21:22 +0900
+category: Algorithm
+---
+### LeetCode 973. K Closest Points to Origin
+
+![](/assets/img/leetcode/973.png)
+
+- 가까운 순서대로 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    private int comp(int[] pointA, int[] pointB)
+    {
+        float distA = pointA[0] * pointA[0] + pointA[1] * pointA[1];
+        float distB = pointB[0] * pointB[0] + pointB[1] * pointB[1];
+
+        if (distA < distB)
+        {
+            return -1;
+        }
+        else if (distA > distB)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    public int[][] KClosest(int[][] points, int k)
+    {
+        int[][] retArr = new int[k][];
+
+        Array.Sort(points, comp);
+
+        for (int i = 0; i < k; i++)
+        {
+            retArr[i] = points[i];
+        }
+        return retArr;
+    }
+}
+```
+
+순서대로니까 그냥 Sorting으로 끝
