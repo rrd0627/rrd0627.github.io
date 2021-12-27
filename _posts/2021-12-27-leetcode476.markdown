@@ -1,0 +1,32 @@
+---
+layout: post
+title: LeetCode 476. Number Complement
+date: 2021-12-27 23:10:50 +0900
+category: Algorithm
+---
+### LeetCode 476. Number Complement
+
+![](/assets/img/leetcode/476.png)
+
+- 바이너리 뒤집어진 숫자 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int FindComplement(int num)
+    {
+        uint ret = 1;
+        while (ret <= num)
+        {
+            ret = ret << 1;
+        }
+        return (int)ret - num - 1;
+    }
+}
+```
+
+순서대로니까 그냥 Sorting으로 끝
