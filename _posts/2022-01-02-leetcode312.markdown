@@ -1,0 +1,65 @@
+---
+layout: post
+title: LeetCode 312. Burst Balloons
+date: 2022-01-02 02:04:51 +0900
+category: Algorithm
+---
+### LeetCode 312. Burst Balloons
+
+![](/assets/img/leetcode/312.png)
+
+- 풍선 터뜨리면서 가장 높은 점수 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    int[][] dp;
+    int[] newNums;
+    public int MaxCoins(int[] nums)
+    {
+        newNums = new int[nums.Length + 2];
+        for (int i = 0; i < nums.Length; i++)
+        {
+            newNums[i + 1] = nums[i];
+        }
+        newNums[0] = newNums[newNums.Length - 1] = 1;
+        dp = new int[newNums.Length][];
+        for (int i = 0; i < dp.Length; i++)
+        {
+            dp[i] = new int[newNums.Length];
+        }
+
+        return func(0, newNums.Length - 1);
+    }
+    int func(int left, int right)
+    {
+        if (left + 1 == right) return 0;
+
+        if (dp[left][right] != 0) return dp[left][right];
+
+        int ret = 0;
+        for (int i = left + 1; i < right; i++)
+        {
+            ret = Math.Max(ret, newNums[left] * newNums[i] * newNums[right] + func(left,i) + func(i,right));
+        }
+        dp[left][right] = ret;
+        return ret;
+    }
+}
+```
+
+분할 정복 알고리즘 활용
+
+func 은 left에서 right까지 터뜨렸을때 가장 높은 점수 반환
+
+먼저 배열을 2 늘려서 양옆에 1을 넣어 좀더 쉽게 만듬.
+
+left right i번째만 남기고 나머지 터뜨리게 되면 맨 마지막에 newNums[left] * newNums[i] * newNums[right] 가 남게 되고
+
+i 번째 왼쪽편은 func(left , i) 로 왼쪽 배열의 최대값 오른쪽도 마찬가지가 되기때문에
+
+더해주면 됨!
