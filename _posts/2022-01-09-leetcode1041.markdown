@@ -1,0 +1,55 @@
+---
+layout: post
+title: LeetCode 1041. Robot Bounded In Circle
+date: 2022-01-09 23:10:36 +0900
+category: Algorithm
+---
+### LeetCode 1041. Robot Bounded In Circle
+
+![](/assets/img/leetcode/1041.png)
+
+- 방향을 입력받은 로봇은 계속가면 다시 돌아오는가
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public bool IsRobotBounded(string instructions)
+    {
+        //위치
+        int curposx = 0;
+        int curposy = 0;
+        int dir = 0; //위 오 아래 왼
+
+        for (int i = 0; i < instructions.Length; i++)
+        {
+            if (instructions[i] == 'L') dir--;
+            else if (instructions[i] == 'R') dir++;
+            else if (instructions[i] == 'G')
+            {
+                if (dir % 4 == 0)
+                    curposy++;
+                if (dir % 4 == 1 || dir % 4 == -3)
+                    curposx++;
+                if (dir % 4 == 2 || dir % 4 == -2)
+                    curposy--;
+                if (dir % 4 == 3 || dir % 4 == -1)
+                    curposx--;
+            }
+        }
+        //한 사이클 돈 뒤에 위치가 원점이면 무조건 원래자리임
+        if (curposx == 0 && curposy == 0) return true;
+        //한 사이클 돌았는데 같은곳을 보고있으면 무조건 멀어짐
+        if (dir % 4 == 0) return false;
+        //그 외에는 다 돌아옴
+        return true;
+    }
+}
+```
+
+한사이클 돌았는데 원점이라면 당연히 원점을 벗어날 수 없다.
+
+한사이클을 돌았는데 다른곳을 보고있다면 4번 돌아서 원래 자리로 돌아오게됨
