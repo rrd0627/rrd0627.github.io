@@ -4,60 +4,44 @@ title: Unity URP Shader
 date: 2022-01-31 23:54:42 +0900
 category: ETC
 ---
-# UniTask 사용법
+# URP Shader
 
+```c#
+#ifndef CUSTOM_LIGHTINIG_INCLUDED
+#define CUSTOM_LIGHTINIG_INCLUDED
 
-```cpp
-
-using Cysharp.Threading.Tasks;
-using System.Threading;
-
-public class unitasktest : MonoBehaviour
-{
-    // Start is called before the first frame update
-    async void Start()
-    {
-        List<UniTask> tasks = new List<UniTask>();
-        for (int i = 0; i < 3; i++)
-            tasks.Add(test(i + 1));
-        await UniTask.WhenAll(tasks);
-        print("ALL DONE");
-        WhileTest().Forget();
-    }
-
-    private async UniTask test(float duration)
-    {
-        float timer = 0;
-
-        print($"STart {duration}");
-
-        while (timer < duration)
-        {
-            timer += Time.deltaTime;
-            await UniTask.Yield();
-        }
-        print($"End {duration}");
-    }
-
-    CancellationTokenSource cts = new CancellationTokenSource();
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            this.gameObject.SetActive(false);
-            cts.Cancel();
-        }
-    }
-    private async UniTaskVoid WhileTest()
-    {
-        while (true)
-        {
-            print("Still working");
-            await UniTask.Delay(1000, DelayType.DeltaTime, PlayerLoopTiming.Update, cts.Token);
-        }
-    }
+void CalcaulateMainLight_float(float3 WorldPos,out float3 Direction, out float3 Color){
+    #if defined(SHADERGRAPH_PREVIEW)
+        Direction = float3(0.5,0.5,0);
+        Color = 1;
+    #else
+        Light mainLight = GetMainLight(0);
+        Direction = mainLight.direction;
+        Color = mainLight.color;
+    #endif    
 }
-
-
+#endif
 ```
 
+CalcaulateMainLight_float 에서 CalcaulateMainLight가 함수 이름이고 float은 어떤 type을 사용할지 알려줌
+
+float3 WorldPos,out float3 Direction, out float3 Color
+에서 WorldPos는 인풋 나머지둘은 아웃풋
+
+defined(SHADERGRAPH_PREVIEW) 는 쉐이더 그래프내에서 프리뷰로 보이는 아웃풋
+
+GetMainLight는 유니티에서 가장 밝은 디렉셔널 라이트
+
+
+
+해당 코드를 메인 라이트르 구하는데에 사용하여 쉐이더 그래프의 커스텀 Func으로 사용
+
+![](/assets/img/Unity/2022-02-01-16-50-59.png)
+
+인풋으로 월드포지션을 넣어 커스텀 func에서 나온 메인라이트 dir과 normal을 dot하여 -1 부터 1까지 메인라이트와의 방향성을 구함
+
+거기서 1더해주고 2로 나누어 0에서 1로 바꿈
+
+메인라이트의 컬러와 곱해주고 아웃풋을 컬러에 넣어주면 짜잔
+
+보통 평범한 빛을 받는 쉐이더 완성
