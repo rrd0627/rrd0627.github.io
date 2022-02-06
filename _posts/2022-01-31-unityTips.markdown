@@ -60,6 +60,3 @@ GetMainLight는 유니티에서 가장 밝은 디렉셔널 라이트
 ![](/assets/img/Unity/2022-02-01-17-26-49.png)
 
 텍스처 넣어주기
-
-### Specular
-
