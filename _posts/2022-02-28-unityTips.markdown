@@ -19,4 +19,47 @@ Mac에서
 1. git webhook 연동하여 push 로 빌드하기 ( 옵션 - 각자 유저가 )
 1. Unity 빌드 환경 세팅 ( jenkins 관리 > Global tool Configuration) ![](/assets/img/Unity/2022-03-03-22-53-02.png)
 1. ( -quit -batchmode -buildTarget Android -executeMethod AutoBuilder.PerformBuildAOS )
-1. ![](/assets/img/Unity/2022-03-06-23-52-35.png)
+1. ![](/assets/img/Unity/2022-03-06-23-52-35.png) Slack 세부정보 > 통합 > 앱추가 > jenkins CI >  3단계의 팀하위도메인과 토큰 ID 저장 후에 설정 저장 > 젠킨스에서 아이템 구성 > 빌드 후 조치 추가 ( slack ) > 원하는 noti 선택 후 고급 > WorkSpace 에 하위 도메인 Credential 은 
+
+Kind -> Secret text
+
+Secret -> 통합 토큰 자격 증명 ID
+
+ID -> Credential 구분을 위한 적절한 ID
+
+Channel/member id 에 채널 ex) #test 넣고 connect Test
+
+13. 젠킨스 아이템 PipeLine 만들기 > 
+![](/assets/img/Unity/2022-03-07-01-05-17.png)
+
+트리거 설정 (아이템 이름 넣기)
+
+파이프 라인에
+
+```csharp
+
+pipeline {
+    agent any
+    stages
+    {
+        stage('Slack')
+        {
+            steps{
+                slackSend channel: '#test', color: 'good', message: 'message test', teamDomain: 'test-ej08797', tokenCredentialId: 'GogiSlack'
+            }
+        }
+        
+        stage('Upload File')
+        {
+            steps{
+                slackUploadFile channel: '#test', credentialId: 'GogiSlack', filePath: '~/Desktop/My project/My project1.apk', initialComment: 'project apk'
+            }
+        }
+    }
+}
+
+```
+
+각각에 알맞게 넣어주기 또는 pipeline syntax로 알아서 만들기
+
+흠...파일 경로 지정하기와 파일 올리기 권한에 대해서...
