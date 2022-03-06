@@ -19,3 +19,4 @@ Mac에서
 1. git webhook 연동하여 push 로 빌드하기 ( 옵션 - 각자 유저가 )
 1. Unity 빌드 환경 세팅 ( jenkins 관리 > Global tool Configuration) ![](/assets/img/Unity/2022-03-03-22-53-02.png)
 1. ( -quit -batchmode -buildTarget Android -executeMethod AutoBuilder.PerformBuildAOS )
+1. ![](/assets/img/Unity/2022-03-06-23-52-35.png)
