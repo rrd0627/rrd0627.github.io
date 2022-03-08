@@ -19,47 +19,18 @@ Mac에서
 1. git webhook 연동하여 push 로 빌드하기 ( 옵션 - 각자 유저가 )
 1. Unity 빌드 환경 세팅 ( jenkins 관리 > Global tool Configuration) ![](/assets/img/Unity/2022-03-03-22-53-02.png)
 1. ( -quit -batchmode -buildTarget Android -executeMethod AutoBuilder.PerformBuildAOS )
-1. ![](/assets/img/Unity/2022-03-06-23-52-35.png) Slack 세부정보 > 통합 > 앱추가 > jenkins CI >  3단계의 팀하위도메인과 토큰 ID 저장 후에 설정 저장 > 젠킨스에서 아이템 구성 > 빌드 후 조치 추가 ( slack ) > 원하는 noti 선택 후 고급 > WorkSpace 에 하위 도메인 Credential 은 
-
-Kind -> Secret text
-
-Secret -> 통합 토큰 자격 증명 ID
-
-ID -> Credential 구분을 위한 적절한 ID
-
-Channel/member id 에 채널 ex) #test 넣고 connect Test
-
-13. 젠킨스 아이템 PipeLine 만들기 > 
-![](/assets/img/Unity/2022-03-07-01-05-17.png)
-
-트리거 설정 (아이템 이름 넣기)
-
-파이프 라인에
-
-```csharp
-
-pipeline {
-    agent any
-    stages
-    {
-        stage('Slack')
-        {
-            steps{
-                slackSend channel: '#test', color: 'good', message: 'message test', teamDomain: 'test-ej08797', tokenCredentialId: 'GogiSlack'
-            }
-        }
-        
-        stage('Upload File')
-        {
-            steps{
-                slackUploadFile channel: '#test', credentialId: 'GogiSlack', filePath: '~/Desktop/My project/My project1.apk', initialComment: 'project apk'
-            }
-        }
-    }
-}
-
-```
-
-각각에 알맞게 넣어주기 또는 pipeline syntax로 알아서 만들기
-
-흠...파일 경로 지정하기와 파일 올리기 권한에 대해서...
+1. https://api.slack.com/apps/ 접속 > Create An App > From Strech > workspace 결정 후 create
+1. Basic Information > Incoming WebHook On
+1. Basic Information > Permission > Bot Token Scope > 
+![](/assets/img/Unity/2022-03-09-01-09-06.png)
+1. Basic Information > Install To workspace
+1. OAuth & Permissions 에서 OAuth Tokens for Your Workspace
+확인
+1. Jenkins 에서 Add Credentials > ![](/assets/img/Unity/2022-03-09-00-53-07.png)
+Secret에 OAuth Token넣어주기
+1. 젠킨스 아이템 구성에 빌드 후 조치에 해당 Credential 넣고 Workspace Channel 넣고 Test Connection
+1. ![](/assets/img/Unity/2022-03-09-01-11-39.png) 
+Custom slack app bot user 체크
+1. Slack File Upload는 ![](/assets/img/Unity/2022-03-09-01-15-05.png)  (경로를 주의해서 설정!)
+1. ![](/assets/img/Unity/2022-03-09-01-20-39.png) 
+슬랙에서 앱 추가!
