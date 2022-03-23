@@ -8,32 +8,7 @@ category: ETC
 
 Jenkins IOS 빌드
 
-1. 새로운 pipeline 생성 후 Editor Command는 
-( -quit -batchmode -buildTarget iOS -executeMethod AutoBuilder.PerformBuildIOS )
-1. Developmnet Team -> ( 시스템 설정에서 추가 )
-
-Configuration -> Release
-
-Xcode Schema File -> Unity-iPhone
-
-Generate Archive? -> Check
-
-Pack application, build and sign .ipa? -> Check
-
-Export method -> app-store
-
-.ipa filename pattern -> Unity-iPhone
-
-Upload Symbols? -> Check
-
-Pack on demand resources? -> Check
-
-Strip Swift Symobols? -> Check
-
-< Code signing & OS X keychain options >
-
-Automatic Signing -> Check
-
-< Advanced Xcode build options >
-
-Xcode Project Directory -> ./IOS
+1. 새로운 파이프라인 생성
+1. Definition > Pipeline sciprt from SCM ![](/assets/img/Unity/2022-03-23-23-00-15.png) 
+1. Script Path 설정 > Assets/Plugins/Editor/Jenkisfile ( 파일 들어있는 위치 )
+![](/assets/img/Unity/2022-03-23-23-02-57.png)
