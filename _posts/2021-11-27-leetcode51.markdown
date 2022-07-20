@@ -1,0 +1,66 @@
+---
+layout: post
+title: LeetCode 51. N-Queens
+date: 2021-11-25 21:40:47 +0900
+category: Algorithm
+---
+### LeetCode 51. N-Queens
+
+![](/assets/img/leetcode/49.png)
+
+- 아나그램 묶기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        char[] curChars;
+
+        Dictionary<string, int> strToIndex = new Dictionary<string, int>();
+
+        int strKey = 0;
+
+        List<IList<string>> ret = new List<IList<string>>();
+
+        for (int i = 0; i < strs.Length; i++)
+        {
+            curChars = strs[i].ToArray();
+            Array.Sort(curChars);
+            string curStr = new string(curChars);
+
+            if (strToIndex.TryGetValue(curStr, out int curIndex))
+            {
+                ret[curIndex].Add(strs[i]);
+            }
+            else
+            {
+                List<string> tempRet = new List<string>();
+                tempRet.Add(strs[i]);
+                strToIndex.Add(curStr, strKey);
+                ret.Add(tempRet);
+                strKey++;
+            }
+        }
+        return ret;
+    }
+}
+```
+
+Hash로 중복 확인! 이때 중복 확인을 위해 문자열을 정렬함!
+
+정렬을 위해서 string 을 char[] 로 다시 string 으로 변환함!
+
+이때 char[] 에서 string 으로 변환 방법은
+
+**생성자**
+
+new string(char[])  생성자를 활용하는 방법
+
+**메소드**
+
+string str = string.Concat(char[])   함수를 활용하는 방법이 있다!
