@@ -1,0 +1,39 @@
+---
+layout: post
+title: LeetCode 231. Power of Two
+date: 2021-12-21 21:32:23 +0900
+category: Algorithm
+---
+### LeetCode 231. Power of Two
+
+![](/assets/img/leetcode/231.png)
+
+- n이 power of 2 인가!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public bool IsPowerOfTwo(int n)
+    {   
+        if(n<=0)return false;
+
+        if (n == 1) return true;
+
+        if (n % 2 == 1) return false;
+
+        return IsPowerOfTwo(n / 2);
+    }
+}
+```
+
+n이 0보다 작으면 false
+
+1은 true!
+
+2로 나누어서 1남으면 false
+
+n 2로 나누어서 다시!

@@ -1,0 +1,51 @@
+---
+layout: post
+title: LeetCode 61. Rotate List
+date: 2021-12-11 19:00:46 +0900
+category: Algorithm
+---
+### LeetCode 61. Rotate List
+
+![](/assets/img/leetcode/61.png)
+
+- 링크리스트 rotate 하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public ListNode RotateRight(ListNode head, int k)
+    {
+        List<ListNode> lists = new List<ListNode>();
+
+        if (head == null || head.next == null || k == 0)
+            return head;
+
+        while (head != null)
+        {
+            lists.Add(head);
+            head = head.next;
+        }
+
+        int kMod = k % lists.Count;
+
+        if (kMod == 0)
+        {
+            return lists[0];
+        }
+
+        //떼는곳
+        lists[lists.Count - kMod - 1].next = null;
+
+        //마지막
+        lists[lists.Count - 1].next = lists[0];
+
+        return lists[lists.Count - kMod];
+    }
+}
+```
+
+List에 담아서 필요한 아이만 링크 옮겨주기

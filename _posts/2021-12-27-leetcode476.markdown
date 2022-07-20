@@ -1,0 +1,38 @@
+---
+layout: post
+title: LeetCode 476. Number Complement
+date: 2021-12-27 23:10:50 +0900
+category: Algorithm
+---
+### LeetCode 476. Number Complement
+
+![](/assets/img/leetcode/476.png)
+
+- 바이너리 뒤집어진 숫자 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int FindComplement(int num)
+    {
+        uint ret = 1;
+        while (ret <= num)
+        {
+            ret = ret << 1;
+        }
+        return (int)ret - num - 1;
+    }
+}
+```
+
+num의 길이만큼 1111111이 있는것에서 num를 빼면 답이 나옴!
+
+ex ) 1100 이면  1111 - 1100 = 0011  
+
+그래서 ret은 unsign 정수형으로 선언하여 num보다 큰 2의 배수를 구하고 
+
+1을 뺀 숫자에서 num를 빼줌

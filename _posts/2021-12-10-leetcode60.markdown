@@ -1,0 +1,55 @@
+---
+layout: post
+title: LeetCode 60. Permutation Sequence
+date: 2021-12-10 00:07:37 +0900
+category: Algorithm
+---
+### LeetCode 60. Permutation Sequence
+
+![](/assets/img/leetcode/60.png)
+
+- 순열에서 몇번째 요소 리턴!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public string GetPermutation(int n, int k)
+    {
+        List<int> nums = new List<int>();
+        nums.AddRange(Enumerable.Range(1, n));
+
+        int nfact = 1;
+        for (int i = 1; i <= n; i++)
+            nfact *= i;
+
+        StringBuilder ret = new StringBuilder();
+
+        int blockSize = nfact;
+        int curIndex = k - 1;
+        int blockIndex = 0;
+        while (nums.Count > 0)
+        {
+            //블럭을 쪼개기
+            blockSize = blockSize / n;
+
+            //쪼갠 블럭중 몇번째 블럭인지
+            blockIndex = curIndex / blockSize;
+
+            //몇번째 블럭인지를 토대로 ret작성
+            ret.Append(nums[blockIndex]);
+            nums.RemoveAt(blockIndex);
+
+            //다음을 위해서 
+            n--;
+            curIndex = curIndex % blockSize;
+        }
+        return ret.ToString();
+    }
+}
+```
+
+재귀적인 특성이 있어서 재귀로 품!

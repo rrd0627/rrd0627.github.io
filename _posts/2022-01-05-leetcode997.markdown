@@ -1,0 +1,53 @@
+---
+layout: post
+title: LeetCode 997. Find the Town Judge
+date: 2022-01-02 23:19:54 +0900
+category: Algorithm
+---
+### LeetCode 997. Find the Town Judge
+
+![](/assets/img/leetcode/997.png)
+
+- 모두가 믿지만 아무도 믿지않는 사람 구하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int FindJudge(int n, int[][] trust)
+    {
+        HashSet<int> NotAnswerSet = new HashSet<int>();
+
+        int[] answerArr = new int[n + 1];
+
+        for (int i = 0; i < trust.Length; i++)
+        {
+            NotAnswerSet.Add(trust[i][0]);
+            answerArr[trust[i][1]]++;
+        }
+
+        for (int i = 1; i <= n; i++)
+        {
+            if (answerArr[i] == n - 1)
+            {
+                if (!NotAnswerSet.Contains(i))
+                {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+}
+```
+
+관계도로 보면 모든 사람에게 지목을 받고
+
+나는 아무도 지목하지 않는 사람을 구하는것!
+
+모든 사람에게 지목받으면서 아무도 지목하지 않아야 하기때문에 
+
+모든사람에게 지목받는 것은 배열로 저장하고 지목받지 않는것은 Hashset으로 처리함

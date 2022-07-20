@@ -1,0 +1,38 @@
+---
+layout: post
+title: LeetCode 1015. Smallest Integer Divisible by K
+date: 2021-12-30 23:49:16 +0900
+category: Algorithm
+---
+### LeetCode 1015. Smallest Integer Divisible by K
+
+![](/assets/img/leetcode/1015.png)
+
+- k는 1로 이루어진 숫자로 나누어 떨어지는가!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution {
+    public int SmallestRepunitDivByK(int k) {
+        int remainder = 0;
+        
+        for (int n = 1; n <= k; n++)
+        {
+            remainder = (remainder * 10 + 1) % k;
+            if (remainder == 0)
+            {
+                return n;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+k단위 숫자단위로 잘릴텐데 k번돌면 무조건 나와야함 안나오면 뻐꾸기집원리
+
+안나오면 없는것!
+

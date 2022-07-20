@@ -1,0 +1,54 @@
+---
+layout: post
+title: LeetCode 876. Middle of the Linked List
+date: 2021-12-29 00:01:03 +0900
+category: Algorithm
+---
+### LeetCode 876. Middle of the Linked List
+
+![](/assets/img/leetcode/876.png)
+
+- linkList 중간것 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public ListNode MiddleNode(ListNode head)
+    {
+        List<ListNode> listNodes = new List<ListNode>();
+
+        while (head != null)
+        {
+            listNodes.Add(head);
+            head = head.next;
+        }
+
+        return listNodes[listNodes.Count / 2];
+    }
+}
+```
+
+그냥 저장해서 하기 별로 좋은방법은 아닌듯
+
+>코드
+
+```c#
+public class Solution {
+    public ListNode MiddleNode(ListNode head) {
+        ListNode currentNode = head;
+        ListNode fastNode = head;
+        while (fastNode != null && fastNode.next != null)
+        {
+            currentNode = currentNode.next;
+            fastNode = fastNode.next.next;
+        }
+        return currentNode;
+    }
+}
+```
+
+중간이니까 하나는 한개씩 하나는 두개씩건너가는 방법! 좋은듯...

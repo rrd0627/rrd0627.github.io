@@ -1,0 +1,45 @@
+---
+layout: post
+title: LeetCode 63. Unique Paths II
+date: 2021-12-13 22:20:03 +0900
+category: Algorithm
+---
+### LeetCode 63. Unique Paths II
+
+![](/assets/img/leetcode/63.png)
+
+- 장애물이 있는곳에 길 몇개 있는지 찾기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int UniquePathsWithObstacles(int[][] obstacleGrid)
+    {
+        int[] retArr = new int[obstacleGrid[0].Length];
+        retArr[0] = 1;
+
+        for (int i = 0; i < obstacleGrid.Length; i++)
+        {
+            for (int j = 0; j < obstacleGrid[0].Length; j++)
+            {
+                if (obstacleGrid[i][j] == 1)
+                {
+                    retArr[j] = 0;
+                }
+                else
+                {
+                    if (j == 0) continue;
+                    retArr[j] += retArr[j - 1];
+                }
+            }
+        }
+        return retArr[retArr.Length - 1];
+    }
+}
+```
+
+굳이 이중배열 필요없이 차례대로 하기 때문에 일차 배열로 dp로 해결!

@@ -1,0 +1,58 @@
+---
+layout: post
+title: LeetCode 71. Simplify Path
+date: 2022-01-10 23:00:54 +0900
+category: Algorithm
+---
+### LeetCode 71. Simplify Path
+
+![](/assets/img/leetcode/71.png)
+
+- Unix path style 간단하게 만들기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public string SimplifyPath(string path)
+    {
+        Stack<string> fileStack = new Stack<string>();
+
+        path = path.Replace("//", "/");
+
+        string[] files = path.Split('/');
+        for (int i = 0; i < files.Length; i++)
+        {
+            if (files[i].Length == 0) continue;
+            if (files[i] == ".") continue;
+
+            if (files[i] == "..")
+            {
+                if (fileStack.Count != 0)
+                    fileStack.Pop();
+            }
+            else
+            {
+                fileStack.Push(files[i]);
+            }
+        }
+
+        StringBuilder ret = new StringBuilder();
+
+        while (fileStack.Count != 0)
+        {
+            ret.Insert(0,fileStack.Pop());
+            ret.Insert(0,"/");
+        }
+        if (ret.Length == 0) ret.Append("/");
+        return ret.ToString();
+    }
+}
+```
+
+뒤로 돌아가는 경우 /../ 에 돌아가야 되기 때문에 Stack에 넣고 .. 이 있는경우 하나를 빼는식으로 되돌아감
+
+마지막에 stack에 있는것을 하나씩 빼며 앞에다가 넣음!

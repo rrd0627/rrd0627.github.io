@@ -1,0 +1,44 @@
+---
+layout: post
+title: LeetCode 1022. Sum of Root To Leaf Binary Numbers
+date: 2022-01-11 22:47:20 +0900
+category: Algorithm
+---
+### LeetCode 1022. Sum of Root To Leaf Binary Numbers
+
+![](/assets/img/leetcode/1022.png)
+
+- 트리노드를 따라서 결정된 바이너리를 합한 수는?!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int SumRootToLeaf(TreeNode root)
+    {
+        return sum(root, 0);
+    }
+    public int sum(TreeNode root, int sumNum)
+    {
+        if (root == null) return 0;
+
+        sumNum = 2 * sumNum + root.val;
+        if (root.left == null && root.right == null) return sumNum;
+        
+        return sum(root.left, sumNum) + sum(root.right, sumNum);
+    }
+}
+```
+
+극한으로 줄인코드!
+
+맨위에 노드는 가장 왼쪽 숫자가 되므로 내려갈때마다 2배씩 커짐
+
+현재 노드의 val가 1이면 1을 더해줌
+
+양쪽으로 더해주며 내려가면 모두 합한 수를 구할 수 있음!
+
+양쪽이 다 없어야 마지막 노드이므로 해당 조건만 리턴해주고 root가 null인경우는 0을 리턴해야함

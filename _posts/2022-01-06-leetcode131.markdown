@@ -1,0 +1,66 @@
+---
+layout: post
+title: LeetCode 131. Palindrome Partitioning
+date: 2022-01-05 23:27:31 +0900
+category: Algorithm
+---
+### LeetCode 131. Palindrome Partitioning
+
+![](/assets/img/leetcode/131.png)
+
+- 팰린드롬 부분집합 모두 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    List<IList<string>> ret = new List<IList<string>>();
+    string _s;
+    bool[,] dp;
+    public IList<IList<string>> Partition(string s)
+    {
+        _s = s;
+        dp = new bool[s.Length, s.Length];
+
+        dfs(0, new List<string>());
+
+        return ret;
+    }
+
+    void dfs(int start, List<string> retTemp)
+    {
+        if (start >= _s.Length)
+        {
+            ret.Add(new List<string>(retTemp));
+            return;
+        }
+
+        for (int end = start; end < _s.Length; end++)
+        {
+            //중간이 팰린드롬이면서 끝쪽이 같으면
+            if ((_s[start] == _s[end]) && (end - start <= 2 || dp[start + 1, end - 1]))
+            {
+                dp[start, end] = true;
+                //retTemp를 넣어주고
+                retTemp.Add(_s.Substring(start, end - start + 1));
+                //다음으로 넘어가고
+                dfs(end + 1, retTemp);
+                //원래자리로 돌아오기
+                retTemp.RemoveAt(retTemp.Count - 1);
+            }
+
+        }
+    }
+}
+```
+
+가운데 부분이 팰린드롬이고 처음과 끝이 같은 문자라면 팰린드롬이다.
+
+retTemp를 넣어주고 넣은 것을 dfs 돌린 뒤 다시 돌아오면 빼서 다음 팰린드롬을 찾는
+
+BackTracking을 사용함!
+
+가운데 부분이 팰린드롬인것은 dp를 활용!

@@ -1,0 +1,58 @@
+---
+layout: post
+title: LeetCode 1200. Minimum Absolute Difference
+date: 2021-12-20 23:58:41 +0900
+category: Algorithm
+---
+### LeetCode 1200. Minimum Absolute Difference
+
+![](/assets/img/leetcode/1200.png)
+
+- 가장 작은 차이를 가진 배열들 구하기
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public IList<IList<int>> MinimumAbsDifference(int[] arr)
+    {
+        Array.Sort(arr);
+
+        List<IList<int>> ret = new List<IList<int>>();
+
+        List<int> curList;
+
+        int minAbsDiff = int.MaxValue;
+
+        for (int i = 1; i < arr.Length; i++)
+        {
+            int diff = arr[i] - arr[i - 1];
+
+            if (diff < minAbsDiff)
+            {
+                //새로 해야댐
+                minAbsDiff = diff;
+
+                ret.Clear();
+
+                curList = new List<int>() { arr[i - 1], arr[i] };
+
+                ret.Add(curList);
+            }
+            else if (diff == minAbsDiff)
+            {
+                //같은건 ret에 더해주기
+                curList = new List<int>() { arr[i - 1], arr[i] };
+
+                ret.Add(curList);
+            }
+        }
+        return ret;
+    }
+}
+```
+
+왠만한 문제는 sort를 하고나면 답이보인다...

@@ -1,0 +1,43 @@
+---
+layout: post
+title: LeetCode 1026. Maximum Difference Between Node and Ancestor
+date: 2021-12-31 22:26:04 +0900
+category: Algorithm
+---
+### LeetCode 1026. Maximum Difference Between Node and Ancestor
+
+![](/assets/img/leetcode/1026.png)
+
+- 부모자식간에 가장 차이가 큰 거 구하기!
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public int MaxAncestorDiff(TreeNode root)
+    {
+        return func(root, int.MaxValue, int.MinValue);
+    }
+    int func(TreeNode root, int min, int max)
+    {
+        if (root == null)
+        {
+            return Math.Abs(min - max);
+        }
+        if (root.val < min)
+        {
+            min = root.val;
+        }
+        if (root.val > max)
+        {
+            max = root.val;
+        }
+        return Math.Max(func(root.left, min, max), func(root.right, min, max));
+    }
+}
+```
+
+죽 내려가면서 가장 큰거 찾기 위해서 min max 찾기 위해서 구함!

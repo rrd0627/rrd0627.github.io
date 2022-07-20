@@ -1,0 +1,42 @@
+---
+layout: post
+title: LeetCode 701. Insert into a Binary Search Tree
+date: 2022-01-12 22:34:46 +0900
+category: Algorithm
+---
+### LeetCode 701. Insert into a Binary Search Tree
+
+![](/assets/img/leetcode/701.png)
+
+- BST Insert
+
+<br><br>
+
+>코드
+
+```c#
+public class Solution
+{
+    public TreeNode InsertIntoBST(TreeNode root, int val)
+    {
+        if (root == null)
+            return new TreeNode(val);
+
+        if (root.val > val)
+        {
+            root.left = InsertIntoBST(root.left, val);
+        }
+        else
+        {
+            root.right = InsertIntoBST(root.right, val);
+        }
+        return root;
+    }
+}
+```
+
+극한으로 줄인코드!
+
+도착한 곳이 비어있는곳이면 새로 넣는거 넣기
+
+그게 아니면 val에 따라 왼쪽 오른쪽으로 내려가기
