@@ -11,7 +11,7 @@ ECS
 Entity! Component! System!
 
 ===============
-GameObject 와 Entity의 차이
+# GameObject 와 Entity의 차이
 
 모노behaviour component  -  ECS component
 데이터와 로직            - 데이터만 가지고있음
@@ -20,7 +20,7 @@ GameObject 와 Entity의 차이
 싱글 쓰레드               - 멀티쓰레드
 
 ==============
-Component
+# Component
 
 데이터만 저장함
 한 엔티티에 저장되야함
@@ -29,7 +29,7 @@ Component
 
 
 ================
-System
+# System
 
 아무 데이터도 가지지 않음
 로직을 실행함

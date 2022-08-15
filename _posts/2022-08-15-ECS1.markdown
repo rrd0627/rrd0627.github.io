@@ -1,0 +1,38 @@
+---
+layout: post
+title: ECS1
+date: 2022-08-15 23:18:43 +0900
+category: ECS
+---
+
+ECS
+
+
+## 유니티에 적용하기!
+
+===================
+### Component
+
+IComponentData를 상속함
+
+[GenerateAuthoringComponent]  Atrribute를 붙여 게임오브젝트에 붙일 수 있도록 함
+
+게임오브젝트에는 Convert To Entity 스크립트를 붙여주어야 Component가 된다.
+
+vector3 이 아니라 float3을 사용함
+
+
+### System
+
+SystemBase 를 상속함
+
+protected override void OnUpdate() 를 구현해야함
+
+Entities.ForEach(ref Translation translation, ref Rotation rotation) =>
+        {
+            translation.Value += new float3(1,0,0);
+        }).Schedule();
+
+OnUpdate 안에 이렇게 구현하면 저절로 Translation, Rotation이 있는 컴포넌트들을 찾아 실행한다.
+
+.Schedule() 로 실행하게 됨
